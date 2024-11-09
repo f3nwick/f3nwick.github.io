@@ -13,7 +13,7 @@
             margin: 0;
             text-align: center;
             flex-direction: column;
-            background-color: #3c3c3c; /* Darker background color */
+            background-color: #3c3c3c; /* Darker background color for light mode */
             color: #faf8f2; /* Light text color for contrast */
         }
         h1 {
@@ -24,6 +24,23 @@
         }
         .highlight {
             color: #6d8050; /* Darker green specific paragraph color */
+        }
+
+        /* Dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a; /* Dark background color for dark mode */
+                color: #eaeaea; /* Light text color for dark mode */
+            }
+            h1 {
+                color: #c94c4c; /* Red heading color for contrast in dark mode */
+            }
+            p {
+                color: #b1cbbb; /* Green paragraph color for contrast in dark mode */
+            }
+            .highlight {
+                color: #eea29a; /* Coral specific paragraph color for contrast in dark mode */
+            }
         }
     </style>
 </head>
