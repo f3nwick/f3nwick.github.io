@@ -16,12 +16,15 @@
             background-color: #3c3c3c; /* Darker background color for light mode */
             color: #faf8f2; /* Light text color for contrast */
             font-family: Arial, Helvetica, sans-serif; /* Adding sans-serif font */
+            padding: 20px; /* Adding padding for better mobile view */
         }
         h1 {
             color: #b08d57; /* Light brown heading color */
+            font-size: 2em; /* Responsive font size for heading */
         }
         p {
             color: #8c9a76; /* Olive green paragraph color */
+            font-size: 1.2em; /* Responsive font size for paragraphs */
         }
         .highlight {
             color: #6d8050; /* Darker green specific paragraph color */
@@ -43,11 +46,23 @@
                 color: #eea29a; /* Coral specific paragraph color for contrast in dark mode */
             }
         }
+
+        /* Media queries for responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em; /* Smaller font size for mobile devices */
+            }
+            p {
+                font-size: 1em; /* Smaller font size for mobile devices */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2em; /* Even smaller font size for very small devices */
+            }
+            p {
+                font-size: 0.9em; /* Even smaller font size for very small devices */
+            }
+        }
     </style>
-</head>
-<body>
-    <h1>Welcome to FenMart</h1>
-    <p>fenmart.com is currently under construction.</p>
-    <p class="highlight">Check back for updates!</p>
-</body>
-</html>
