@@ -13,8 +13,8 @@
             margin: 0;
             text-align: center;
             flex-direction: column;
-            background-color: #deeaee; /* Light blue background color */
-            color: #4a4a4a; /* Darker text color for contrast */
+            background-color: #4a4a4a; /* Darker background color for light mode */
+            color: #eaeaea; /* Lighter text color for better contrast */
         }
         h1 {
             color: #c94c4c; /* Red heading color for strong contrast */
@@ -24,6 +24,23 @@
         }
         .highlight {
             color: #eea29a; /* Coral specific paragraph color for differentiation */
+        }
+
+        /* Dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #deeaee; /* Light blue background color for dark mode */
+                color: #4a4a4a; /* Darker text color for contrast */
+            }
+            h1 {
+                color: #c94c4c; /* Red heading color for dark mode */
+            }
+            p {
+                color: #b1cbbb; /* Green paragraph color for dark mode */
+            }
+            .highlight {
+                color: #eea29a; /* Coral specific paragraph color for dark mode */
+            }
         }
     </style>
 </head>
