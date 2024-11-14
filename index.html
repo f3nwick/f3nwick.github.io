@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FenMart</title>
     <style>
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling */
+        }
         body {
             display: flex;
             justify-content: center;
@@ -28,6 +32,13 @@
             font-size: 1.2em; /* Responsive font size for paragraphs */
             margin-bottom: 15px; /* Standard spacing for paragraphs */
         }
+        p:first-of-type {
+            font-size: 1.4em; /* Slightly larger font size for first paragraph */
+            margin-bottom: 5px; /* Reduced spacing between the first and second paragraphs */
+        }
+        p:last-of-type {
+            color: #d17a6a; /* Soft coral accent for the last paragraph */
+        }
         hr {
             width: 30%; /* Adjusted width */
             margin: 20px 0; /* Spacing above and below the line */
@@ -48,6 +59,13 @@
             p {
                 color: #c1c7c4; /* Cool gray for contrast in dark mode */
                 margin-bottom: 15px; /* Standard spacing for paragraphs */
+            }
+            p:first-of-type {
+                font-size: 1.4em; /* Slightly larger font size for first paragraph */
+                margin-bottom: 5px; /* Reduced spacing between the first and second paragraphs */
+            }
+            p:last-of-type {
+                color: #d17a6a; /* Soft coral specific highlight color in dark mode */
             }
             hr {
                 border-top: 2px solid #c1c7c4; /* Adjust line color for dark mode */
