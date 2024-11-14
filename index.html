@@ -26,10 +26,10 @@
         p {
             color: #586c67; /* Muted green paragraph color */
             font-size: 1.2em; /* Responsive font size for paragraphs */
-            margin-bottom: 15px; /* Standard spacing for paragraphs */
+            margin-bottom: 10px; /* Standard spacing for paragraphs */
         }
-        p + p {
-            margin-top: 5px; /* Reduced spacing between consecutive paragraphs */
+        p:first-of-type {
+            margin-bottom: 5px; /* Reduced spacing between the first and second paragraphs */
         }
         p:last-of-type {
             color: #d17a6a; /* Soft coral accent for the last paragraph */
@@ -53,10 +53,10 @@
             }
             p {
                 color: #c1c7c4; /* Cool gray for contrast in dark mode */
-                margin-bottom: 15px; /* Standard spacing for paragraphs */
+                margin-bottom: 10px; /* Standard spacing for paragraphs */
             }
-            p + p {
-                margin-top: 5px; /* Reduced spacing between consecutive paragraphs */
+            p:first-of-type {
+                margin-bottom: 5px; /* Reduced spacing between the first and second paragraphs */
             }
             p:last-of-type {
                 color: #d17a6a; /* Soft coral specific highlight color in dark mode */
@@ -73,10 +73,10 @@
             }
             p {
                 font-size: 1em; /* Smaller font size for mobile devices */
-                margin-bottom: 12px; /* Adjust size for smaller screens */
+                margin-bottom: 10px; /* Standard spacing for paragraphs */
             }
-            p + p {
-                margin-top: 4px; /* Adjusted spacing for smaller screens */
+            p:first-of-type {
+                margin-bottom: 5px; /* Reduced spacing between the first and second paragraphs */
             }
             hr {
                 width: 40%; /* Adjust width for smaller screens */
@@ -89,10 +89,10 @@
             }
             p {
                 font-size: 0.9em; /* Even smaller font size for very small devices */
-                margin-bottom: 10px; /* Adjust size for very small screens */
+                margin-bottom: 10px; /* Standard spacing for paragraphs */
             }
-            p + p {
-                margin-top: 3px; /* Adjusted spacing for very small screens */
+            p:first-of-type {
+                margin-bottom: 5px; /* Reduced spacing between the first and second paragraphs */
             }
             hr {
                 width: 50%; /* Adjust width for very small screens */
