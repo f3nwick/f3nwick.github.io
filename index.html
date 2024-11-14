@@ -13,44 +13,58 @@
             margin: 0;
             text-align: center;
             flex-direction: column;
-            background-color: #3c3c3c; /* Darker background color for light mode */
-            color: #faf8f2; /* Light text color for contrast */
+            background-color: #383834; /* Neutral grayish tone for light mode */
+            color: #e2d2c2; /* Warm beige text color */
             font-family: Arial, Helvetica, sans-serif; /* Adding sans-serif font */
-            padding: 20px; /* Adding padding for better mobile view */
+            padding: 20px; /* Padding for better mobile view */
+        }
+        .logo {
+            width: 150px; /* Adjust the logo size */
+            margin-bottom: 20px; /* Space between logo and header */
         }
         h1 {
-            color: #b08d57; /* Light brown heading color */
-            font-size: 2em; /* Responsive font size for heading */
+            color: #2b5c78; /* Muted blue heading color */
+            font-size: 2.5em; /* Larger, professional heading */
+            margin-bottom: 10px; /* Spacing for neatness */
         }
         p {
-            color: #8c9a76; /* Olive green paragraph color */
+            color: #586c67; /* Muted green paragraph color */
             font-size: 1.2em; /* Responsive font size for paragraphs */
+            margin-bottom: 15px; /* Spacing between paragraphs */
         }
         .highlight {
-            color: #6d8050; /* Darker green specific paragraph color */
+            color: #6b715d; /* Muted olive green for specific highlights */
+        }
+        .secondary {
+            color: #d17a6a; /* Soft coral accent for secondary text */
+            font-size: 1.1em; /* Slightly larger secondary text */
+            margin-top: 0; /* Remove margin-top for better spacing */
         }
 
         /* Dark mode styles */
         @media (prefers-color-scheme: dark) {
             body {
-                background-color: #1a1a1a; /* Dark background color for dark mode */
+                background-color: #281f1f; /* Dark, muted brown background for dark mode */
                 color: #eaeaea; /* Light text color for dark mode */
             }
             h1 {
-                color: #c94c4c; /* Red heading color for contrast in dark mode */
+                color: #bd332b; /* Bright red heading color for contrast in dark mode */
             }
             p {
-                color: #b1cbbb; /* Green paragraph color for contrast in dark mode */
+                color: #c1c7c4; /* Cool gray for contrast in dark mode */
             }
             .highlight {
-                color: #eea29a; /* Coral specific paragraph color for contrast in dark mode */
+                color: #d17a6a; /* Soft coral specific highlight color in dark mode */
+            }
+            .secondary {
+                color: #586c67; /* Muted green for secondary text in dark mode */
             }
         }
 
         /* Media queries for responsive design */
         @media (max-width: 768px) {
             h1 {
-                font-size: 1.5em; /* Smaller font size for mobile devices */
+                font-size: 2em; /* Smaller font size for mobile devices */
             }
             p {
                 font-size: 1em; /* Smaller font size for mobile devices */
@@ -59,7 +73,7 @@
 
         @media (max-width: 480px) {
             h1 {
-                font-size: 1.2em; /* Even smaller font size for very small devices */
+                font-size: 1.5em; /* Even smaller font size for very small devices */
             }
             p {
                 font-size: 0.9em; /* Even smaller font size for very small devices */
@@ -68,7 +82,9 @@
     </style>
 </head>
 <body>
+    <img src="your-logo.png" alt="FenMart Logo" class="logo"> <!-- Replace with your logo image path -->
     <h1>Welcome to FenMart</h1>
     <p>fenmart.com is under construction</p>
+    <p class="secondary">More updates coming soon—check back for news!</p>
 </body>
 </html>
