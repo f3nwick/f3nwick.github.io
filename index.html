@@ -31,6 +31,12 @@
         p:last-of-type {
             color: #d17a6a; /* Soft coral accent for the last paragraph */
         }
+        hr {
+            width: 50%; /* Adjust the width to your liking */
+            margin: 20px 0; /* Spacing above and below the line */
+            border: 0; /* Remove default border */
+            border-top: 2px solid #586c67; /* Custom border style */
+        }
 
         /* Dark mode styles */
         @media (prefers-color-scheme: dark) {
@@ -46,6 +52,9 @@
             }
             p:last-of-type {
                 color: #d17a6a; /* Soft coral specific highlight color in dark mode */
+            }
+            hr {
+                border-top: 2px solid #c1c7c4; /* Adjust line color for dark mode */
             }
         }
 
@@ -71,6 +80,7 @@
 </head>
 <body>
     <h1>Welcome to FenMart</h1>
+    <hr>
     <p>fenmart.com is under construction</p>
     <p>More updates coming soon—check back for news!</p>
 </body>
