@@ -13,7 +13,7 @@
             margin: 0;
             text-align: center;
             flex-direction: column;
-            background-color: #383834; /* Neutral grayish tone for light mode */
+            background-color: #303030; /* Slightly darker gray for light mode */
             color: #e2d2c2; /* Warm beige text color */
             font-family: Arial, Helvetica, sans-serif; /* Adding sans-serif font */
             padding: 20px; /* Padding for better mobile view */
@@ -27,6 +27,9 @@
             color: #586c67; /* Muted green paragraph color */
             font-size: 1.2em; /* Responsive font size for paragraphs */
             margin-bottom: 15px; /* Spacing between paragraphs */
+        }
+        p:first-of-type {
+            font-size: 1.4em; /* Slightly larger font size for first paragraph */
         }
         p:last-of-type {
             color: #d17a6a; /* Soft coral accent for the last paragraph */
@@ -42,7 +45,7 @@
         /* Dark mode styles */
         @media (prefers-color-scheme: dark) {
             body {
-                background-color: #281f1f; /* Dark, muted brown background for dark mode */
+                background-color: #232323; /* Slightly darker muted brown for dark mode */
                 color: #eaeaea; /* Light text color for dark mode */
             }
             h1 {
@@ -50,6 +53,9 @@
             }
             p {
                 color: #c1c7c4; /* Cool gray for contrast in dark mode */
+            }
+            p:first-of-type {
+                font-size: 1.4em; /* Slightly larger font size for first paragraph */
             }
             p:last-of-type {
                 color: #d17a6a; /* Soft coral specific highlight color in dark mode */
@@ -67,6 +73,9 @@
             p {
                 font-size: 1em; /* Smaller font size for mobile devices */
             }
+            p:first-of-type {
+                font-size: 1.2em; /* Adjust size for smaller screens */
+            }
             hr {
                 width: 40%; /* Adjust width for smaller screens */
             }
@@ -78,6 +87,9 @@
             }
             p {
                 font-size: 0.9em; /* Even smaller font size for very small devices */
+            }
+            p:first-of-type {
+                font-size: 1.1em; /* Adjust size for very small screens */
             }
             hr {
                 width: 50%; /* Adjust width for very small screens */
