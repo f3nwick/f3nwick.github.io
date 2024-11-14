@@ -26,13 +26,14 @@
         p {
             color: #586c67; /* Muted green paragraph color */
             font-size: 1.2em; /* Responsive font size for paragraphs */
-            margin-bottom: 15px; /* Spacing between paragraphs */
+            margin-bottom: 10px; /* Reduced spacing for closer paragraphs */
         }
         p:first-of-type {
             font-size: 1.4em; /* Slightly larger font size for first paragraph */
         }
         p:last-of-type {
             color: #d17a6a; /* Soft coral accent for the last paragraph */
+            margin-bottom: 0; /* No margin below the last paragraph */
         }
         hr {
             width: 30%; /* Adjusted width */
@@ -53,12 +54,14 @@
             }
             p {
                 color: #c1c7c4; /* Cool gray for contrast in dark mode */
+                margin-bottom: 10px; /* Reduced spacing for closer paragraphs */
             }
             p:first-of-type {
                 font-size: 1.4em; /* Slightly larger font size for first paragraph */
             }
             p:last-of-type {
                 color: #d17a6a; /* Soft coral specific highlight color in dark mode */
+                margin-bottom: 0; /* No margin below the last paragraph */
             }
             hr {
                 border-top: 2px solid #c1c7c4; /* Adjust line color for dark mode */
@@ -72,6 +75,7 @@
             }
             p {
                 font-size: 1em; /* Smaller font size for mobile devices */
+                margin-bottom: 8px; /* Adjust size for smaller screens */
             }
             p:first-of-type {
                 font-size: 1.2em; /* Adjust size for smaller screens */
@@ -87,6 +91,7 @@
             }
             p {
                 font-size: 0.9em; /* Even smaller font size for very small devices */
+                margin-bottom: 6px; /* Adjust size for very small screens */
             }
             p:first-of-type {
                 font-size: 1.1em; /* Adjust size for very small screens */
@@ -100,7 +105,7 @@
 <body>
     <h1>Welcome to FenMart</h1>
     <hr>
-    <p style="font-size: 1.4em;">fenmart.com is under construction</p>
-    <p style="color: #d17a6a;">More updates coming soon—check back for news!</p>
+    <p style="font-size: 1.4em; margin-bottom: 10px;">fenmart.com is under construction</p>
+    <p style="color: #d17a6a; margin-bottom: 0;">More updates coming soon—check back for news!</p>
 </body>
 </html>
