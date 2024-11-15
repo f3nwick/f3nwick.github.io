@@ -6,82 +6,79 @@
     <title>FenMart</title>
     <link rel="canonical" href="https://fenmart.com/" />
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            overflow: hidden; /* Prevent scrolling */
-        }
+        /* General styles for both light and dark modes */
         body {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            text-align: center;
             flex-direction: column;
-            background-color: #202020; /* More noticeably darker gray for light mode */
-            color: #e2d2c2; /* Warm beige text color */
-            font-family: Arial, Helvetica, sans-serif; /* Adding sans-serif font */
-            padding: 20px; /* Padding for better mobile view */
+            text-align: center;
+            background-color: #202020; /* Darker background */
+            color: #e2d2c2; /* Light text color */
+            font-family: Arial, Helvetica, sans-serif;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden; /* Prevent scrolling */
         }
+        
         h1 {
-            color: #2b5c78; /* Muted blue heading color */
-            font-size: 2.5em; /* Larger, professional heading */
-            margin-bottom: 10px; /* Spacing for neatness */
-        }
-        p {
-            color: #586c67; /* Muted green paragraph color */
-            font-size: 1.2em; /* Responsive font size for paragraphs */
-            margin-bottom: 15px; /* Standard spacing for paragraphs */
-        }
-        p:first-of-type {
-            font-size: 1.4em; /* Slightly larger font size for first paragraph */
-            margin-bottom: 5px; /* Reduced spacing between the first and second paragraphs */
-        }
-        p:last-of-type {
-            color: #d17a6a; /* Soft coral accent for the last paragraph */
-        }
-        hr {
-            width: 30%; /* Adjusted width */
-            margin: 20px 0; /* Spacing above and below the line */
-            border: 0; /* Remove default border */
-            border-top: 2px solid #586c67; /* Custom border style */
-            display: block; /* Ensure it's displayed */
+            color: #2b5c78; /* Muted blue */
+            font-size: 2.5em;
+            margin-bottom: 10px;
         }
 
-        /* Dark mode styles */
+        p {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        p:first-of-type {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }
+
+        p:last-of-type {
+            color: #d17a6a; /* Soft coral */
+        }
+
+        hr {
+            width: 30%;
+            margin: 20px 0;
+            border: 0;
+            border-top: 2px solid #586c67; /* Muted green */
+        }
+
+        /* Dark mode overrides */
         @media (prefers-color-scheme: dark) {
             body {
-                background-color: #1a1a1a; /* Slightly darker muted brown for dark mode */
-                color: #eaeaea; /* Light text color for dark mode */
+                background-color: #1a1a1a; /* Darker background for dark mode */
+                color: #eaeaea; /* Light text color */
             }
+
             h1 {
-                color: #bd332b; /* Bright red heading color for contrast in dark mode */
+                color: #bd332b; /* Bright red for dark mode */
             }
+
             p {
-                color: #c1c7c4; /* Cool gray for contrast in dark mode */
-                margin-bottom: 15px; /* Standard spacing for paragraphs */
+                color: #c1c7c4; /* Light gray for paragraphs */
             }
-            p:first-of-type {
-                font-size: 1.4em; /* Slightly larger font size for first paragraph */
-                margin-bottom: 5px; /* Reduced spacing between the first and second paragraphs */
-            }
-            p:last-of-type {
-                color: #d17a6a; /* Soft coral specific highlight color in dark mode */
-            }
+
             hr {
-                border-top: 2px solid #c1c7c4; /* Adjust line color for dark mode */
+                border-top: 2px solid #c1c7c4; /* Lighter line color for dark mode */
             }
         }
 
-        /* Media queries for responsive design */
+        /* Responsive design */
         @media (max-width: 768px) {
             h1 {
-                font-size: 2em; /* Smaller font size for mobile devices */
+                font-size: 2em; /* Smaller heading for mobile */
             }
+
             p {
-                font-size: 1em; /* Smaller font size for mobile devices */
-                margin-bottom: 10px; /* Standard spacing for paragraphs */
+                font-size: 1em; /* Smaller paragraph text for mobile */
             }
+
             hr {
                 width: 40%; /* Adjust width for smaller screens */
             }
@@ -89,12 +86,13 @@
 
         @media (max-width: 480px) {
             h1 {
-                font-size: 1.5em; /* Even smaller font size for very small devices */
+                font-size: 1.5em; /* Even smaller heading for very small devices */
             }
+
             p {
-                font-size: 0.9em; /* Even smaller font size for very small devices */
-                margin-bottom: 10px; /* Standard spacing for paragraphs */
+                font-size: 0.9em; /* Even smaller paragraph text */
             }
+
             hr {
                 width: 50%; /* Adjust width for very small screens */
             }
@@ -104,7 +102,7 @@
 <body>
     <h1>Welcome to FenMart</h1>
     <hr>
-    <p style="font-size: 1.4em; margin-bottom: 5px;">fenmart.com is under construction</p>
-    <p style="font-size: 1.2em; color: #d17a6a;">More updates coming soon—check back for news!</p>
+    <p>fenmart.com is under construction</p>
+    <p>More updates coming soon—check back for news!</p>
 </body>
 </html>
