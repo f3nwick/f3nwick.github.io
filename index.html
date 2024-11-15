@@ -15,7 +15,7 @@
 
         /* Light Mode (Default) */
         body {
-            background-color: #ffffff; /* White background */
+            background-color: #ffffff; /* Pure white background for light mode */
             color: #333333; /* Dark text for high contrast */
             font-family: Arial, Helvetica, sans-serif;
             display: flex;
@@ -27,45 +27,55 @@
         }
 
         h1 {
-            color: #007bff; /* Bright blue for headings */
+            color: #2b5c78; /* Muted blue for headings */
             font-size: 2.5em;
             margin-bottom: 10px;
         }
 
         p {
-            color: #555555; /* Dark gray for paragraphs */
+            color: #586c67; /* Muted green for general text */
             font-size: 1.2em;
             margin-bottom: 15px;
         }
 
+        p:first-of-type {
+            font-size: 1.4em; /* Slightly larger font for first paragraph */
+            margin-bottom: 5px;
+        }
+
         p:last-of-type {
-            color: #d17a6a; /* Coral color for the last paragraph */
+            color: #d17a6a; /* Soft coral color for the last paragraph */
         }
 
         hr {
             width: 30%;
             margin: 20px 0;
             border: 0;
-            border-top: 2px solid #333333; /* Dark border for light mode */
+            border-top: 2px solid #586c67; /* Muted green border for light mode */
         }
 
         /* Dark Mode Styles */
         @media (prefers-color-scheme: dark) {
             body {
-                background-color: #2a2a2a; /* Dark background for dark mode */
+                background-color: #1a1a1a; /* Dark background for dark mode */
                 color: #eaeaea; /* Light gray text for readability in dark mode */
             }
 
             h1 {
-                color: #ff6347; /* Tomato color for headings in dark mode */
+                color: #bd332b; /* Bright red for headings in dark mode */
             }
 
             p {
                 color: #c1c7c4; /* Lighter gray for paragraphs in dark mode */
             }
 
+            p:first-of-type {
+                font-size: 1.4em;
+                margin-bottom: 5px;
+            }
+
             p:last-of-type {
-                color: #ff6347; /* Highlighted coral text in dark mode */
+                color: #d17a6a; /* Soft coral text in dark mode */
             }
 
             hr {
