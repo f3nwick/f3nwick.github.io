@@ -6,12 +6,13 @@
     <title>FenMart</title>
     <link rel="canonical" href="https://fenmart.com/" />
     <style>
+        /* Ensure body and html fill the whole screen */
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden; /* Prevent scrolling */
-            background-color: #ffffff; /* White background for light mode */
+            background-color: #ffffff; /* Set white background for light mode */
         }
 
         body {
@@ -20,14 +21,14 @@
             align-items: center;
             text-align: center;
             flex-direction: column;
-            font-family: Arial, Helvetica, sans-serif;
-            color: #202020; /* Dark text for readability */
-            padding: 20px;
+            font-family: Arial, Helvetica, sans-serif; /* Sans-serif font */
+            color: #202020; /* Dark text for light mode */
+            padding: 20px; /* Padding for mobile responsiveness */
         }
 
         h1 {
             color: #2b5c78; /* Muted blue heading color */
-            font-size: 2.5em;
+            font-size: 2.5em; /* Larger heading */
             margin-bottom: 10px;
         }
 
@@ -43,7 +44,7 @@
         }
 
         p:last-of-type {
-            color: #d17a6a; /* Accent color for last paragraph */
+            color: #d17a6a; /* Accent color for the last paragraph */
         }
 
         hr {
@@ -51,6 +52,26 @@
             margin: 20px 0;
             border: 0;
             border-top: 2px solid #586c67;
+        }
+
+        /* Ensure Dark Mode Styles work properly */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a; /* Dark background for dark mode */
+                color: #eaeaea; /* Light text for dark mode */
+            }
+
+            h1 {
+                color: #bd332b; /* Red color for headings in dark mode */
+            }
+
+            p {
+                color: #c1c7c4; /* Light gray text in dark mode */
+            }
+
+            hr {
+                border-top: 2px solid #c1c7c4; /* Light gray line in dark mode */
+            }
         }
     </style>
 </head>
