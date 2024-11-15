@@ -9,25 +9,25 @@
         html, body {
             height: 100%;
             margin: 0;
+            padding: 0;
             overflow: hidden; /* Prevent scrolling */
+            background-color: #ffffff; /* White background for light mode */
         }
 
         body {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
             text-align: center;
             flex-direction: column;
-            background-color: #ffffff !important; /* Force white background for light mode */
-            color: #202020; /* Dark text color for readability on white */
-            font-family: Arial, Helvetica, sans-serif; /* Sans-serif font */
-            padding: 20px; /* Padding for better mobile view */
+            font-family: Arial, Helvetica, sans-serif;
+            color: #202020; /* Dark text for readability */
+            padding: 20px;
         }
 
         h1 {
             color: #2b5c78; /* Muted blue heading color */
-            font-size: 2.5em; /* Larger heading */
+            font-size: 2.5em;
             margin-bottom: 10px;
         }
 
@@ -38,39 +38,19 @@
         }
 
         p:first-of-type {
-            font-size: 1.4em; /* Slightly larger first paragraph */
-            margin-bottom: 5px; /* Closer spacing between first and second paragraphs */
+            font-size: 1.4em;
+            margin-bottom: 5px;
         }
 
         p:last-of-type {
-            color: #d17a6a; /* Accent color for the last paragraph */
+            color: #d17a6a; /* Accent color for last paragraph */
         }
 
         hr {
             width: 30%;
             margin: 20px 0;
             border: 0;
-            border-top: 2px solid #586c67; /* Custom border color */
-        }
-
-        /* Dark mode styles */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1a1a1a; /* Darker background for dark mode */
-                color: #eaeaea; /* Light text for dark mode */
-            }
-
-            h1 {
-                color: #bd332b; /* Red color for headings in dark mode */
-            }
-
-            p {
-                color: #c1c7c4; /* Gray text for dark mode */
-            }
-
-            hr {
-                border-top: 2px solid #c1c7c4; /* Light gray line for dark mode */
-            }
+            border-top: 2px solid #586c67;
         }
     </style>
 </head>
