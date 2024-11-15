@@ -18,18 +18,18 @@
             width: 100%;
             text-align: center;
             flex-direction: column;
-            background-color: #ffffff; /* Pure white background for light mode */
-            color: #333333; /* Darker text for improved readability */
-            font-family: Arial, Helvetica, sans-serif; /* Sans-serif font */
+            background-color: #202020; /* More noticeably darker gray for light mode */
+            color: #e2d2c2; /* Warm beige text color */
+            font-family: Arial, Helvetica, sans-serif; /* Adding sans-serif font */
             padding: 20px; /* Padding for better mobile view */
         }
         h1 {
-            color: #1d74d1; /* Bright blue heading color for light mode */
+            color: #2b5c78; /* Muted blue heading color */
             font-size: 2.5em; /* Larger, professional heading */
             margin-bottom: 10px; /* Spacing for neatness */
         }
         p {
-            color: #333333; /* Darker text color for readability */
+            color: #586c67; /* Muted green paragraph color */
             font-size: 1.2em; /* Responsive font size for paragraphs */
             margin-bottom: 15px; /* Standard spacing for paragraphs */
         }
@@ -44,28 +44,29 @@
             width: 30%; /* Adjusted width */
             margin: 20px 0; /* Spacing above and below the line */
             border: 0; /* Remove default border */
-            border-top: 2px solid #333333; /* Darker line color for light mode */
+            border-top: 2px solid #586c67; /* Custom border style */
             display: block; /* Ensure it's displayed */
         }
 
         /* Dark mode styles */
         @media (prefers-color-scheme: dark) {
             body {
-                background-color: #2a2a2a; /* Dark background for dark mode */
-                color: #eaeaea; /* Lighter text for dark mode */
+                background-color: #1a1a1a; /* Slightly darker muted brown for dark mode */
+                color: #eaeaea; /* Light text color for dark mode */
             }
             h1 {
                 color: #bd332b; /* Bright red heading color for contrast in dark mode */
             }
             p {
                 color: #c1c7c4; /* Cool gray for contrast in dark mode */
+                margin-bottom: 15px; /* Standard spacing for paragraphs */
             }
             p:first-of-type {
                 font-size: 1.4em; /* Slightly larger font size for first paragraph */
                 margin-bottom: 5px; /* Reduced spacing between the first and second paragraphs */
             }
             p:last-of-type {
-                color: #d17a6a; /* Soft coral highlight in dark mode */
+                color: #d17a6a; /* Soft coral specific highlight color in dark mode */
             }
             hr {
                 border-top: 2px solid #c1c7c4; /* Adjust line color for dark mode */
