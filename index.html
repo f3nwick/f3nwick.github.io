@@ -15,8 +15,8 @@
 
         /* Light Mode (Default) */
         body {
-            background-color: #ffffff; /* True white background */
-            color: #333333; /* Dark text for contrast */
+            background-color: #ffffff; /* White background */
+            color: #333333; /* Dark text for high contrast */
             font-family: Arial, Helvetica, sans-serif;
             display: flex;
             justify-content: center;
@@ -27,31 +27,26 @@
         }
 
         h1 {
-            color: #2b5c78; /* Muted blue for headings */
+            color: #007bff; /* Bright blue for headings */
             font-size: 2.5em;
             margin-bottom: 10px;
         }
 
         p {
-            color: #586c67; /* Muted green for general text */
+            color: #555555; /* Dark gray for paragraphs */
             font-size: 1.2em;
             margin-bottom: 15px;
         }
 
-        p:first-of-type {
-            font-size: 1.4em; /* Slightly larger font for the first paragraph */
-            margin-bottom: 5px;
-        }
-
         p:last-of-type {
-            color: #d17a6a; /* Coral accent for the last paragraph */
+            color: #d17a6a; /* Coral color for the last paragraph */
         }
 
         hr {
             width: 30%;
             margin: 20px 0;
             border: 0;
-            border-top: 2px solid #586c67; /* Muted green border for light mode */
+            border-top: 2px solid #333333; /* Dark border for light mode */
         }
 
         /* Dark Mode Styles */
@@ -69,13 +64,8 @@
                 color: #c1c7c4; /* Lighter gray for paragraphs in dark mode */
             }
 
-            p:first-of-type {
-                font-size: 1.4em;
-                margin-bottom: 5px;
-            }
-
             p:last-of-type {
-                color: #d17a6a; /* Soft coral text in dark mode */
+                color: #ff6347; /* Highlighted coral text in dark mode */
             }
 
             hr {
