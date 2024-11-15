@@ -21,7 +21,7 @@
             text-align: center;
             flex-direction: column;
             font-family: Arial, Helvetica, sans-serif;
-            color: #202020; /* Dark text for readability */
+            color: #333333; /* Darker text color for better contrast in light mode */
             padding: 20px;
         }
 
@@ -51,6 +51,26 @@
             margin: 20px 0;
             border: 0;
             border-top: 2px solid #586c67;
+        }
+
+        /* Dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a; /* Darker background for dark mode */
+                color: #eaeaea; /* Light text for dark mode */
+            }
+
+            h1 {
+                color: #bd332b; /* Red color for headings in dark mode */
+            }
+
+            p {
+                color: #c1c7c4; /* Light gray text in dark mode */
+            }
+
+            hr {
+                border-top: 2px solid #c1c7c4; /* Light gray line in dark mode */
+            }
         }
     </style>
 </head>
