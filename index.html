@@ -778,25 +778,6 @@ async function submitContact(event) {
             // Snipcart is now handling cart functionality
             console.log('FenMart loaded with Snipcart integration');
         });
-
-    function fixLayoutShiftOnCartToggle() {
-        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-
-        Snipcart.events.on('cart.opened', () => {
-            document.body.style.paddingRight = `${scrollbarWidth}px`;
-            document.body.style.overflow = 'hidden';
-        });
-
-        Snipcart.events.on('cart.closed', () => {
-            document.body.style.paddingRight = '';
-            document.body.style.overflow = '';
-        });
-    }
-
-    // Wait for Snipcart to load before attaching event listeners
-    document.addEventListener('snipcart.ready', () => {
-        fixLayoutShiftOnCartToggle();
-    });
     </script>
 </body>
 </html>
