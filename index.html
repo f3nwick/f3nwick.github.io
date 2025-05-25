@@ -3,106 +3,706 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FenMart</title>
+    <title>FenMart - Your Premium Marketplace</title>
     <link rel="canonical" href="https://fenmart.com/" />
     <style>
-        /* General styles for both light and dark modes */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-            background-color: #202020; /* Darker background */
-            color: #e2d2c2; /* Light text color */
-            font-family: Arial, Helvetica, sans-serif;
-            height: 100vh;
+        * {
             margin: 0;
-            padding: 20px;
-            overflow: hidden; /* Prevent scrolling */
-        }
-        
-        h1 {
-            color: #2b5c78; /* Muted blue */
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        p {
-            font-size: 1.2em;
-            margin-bottom: 15px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
 
-        p:first-of-type {
-            font-size: 1.4em;
-            margin-bottom: 5px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        p:last-of-type {
-            color: #d17a6a; /* Soft coral */
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
 
-        hr {
-            width: 30%;
-            margin: 20px 0;
-            border: 0;
-            border-top: 2px solid #586c67; /* Muted green */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
         }
 
-        /* Dark mode overrides */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1a1a1a; /* Darker background for dark mode */
-                color: #eaeaea; /* Light text color */
-            }
-
-            h1 {
-                color: #bd332b; /* Bright red for dark mode */
-            }
-
-            p {
-                color: #c1c7c4; /* Light gray for paragraphs */
-            }
-
-            hr {
-                border-top: 2px solid #c1c7c4; /* Lighter line color for dark mode */
-            }
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* Responsive design */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ff6b6b;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #ff6b6b;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23667eea" width="1200" height="800"/><circle fill="%23764ba2" cx="600" cy="400" r="300" opacity="0.6"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Product Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 3rem 0;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f1f2f6, #ddd);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #666;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* About Section */
+        .about-content {
+            background: white;
+            margin: 2rem 0;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: white;
+            margin: 2rem 0;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 2000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 2rem;
+            text-align: center;
+            color: #ff6b6b;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em; /* Smaller heading for mobile */
+            .nav-links {
+                display: none;
             }
 
-            p {
-                font-size: 1em; /* Smaller paragraph text for mobile */
+            .hero-content h1 {
+                font-size: 2.5rem;
             }
 
-            hr {
-                width: 40%; /* Adjust width for smaller screens */
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .cart-sidebar {
+                width: 100vw;
+                right: -100vw;
             }
         }
 
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5em; /* Even smaller heading for very small devices */
-            }
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
 
-            p {
-                font-size: 0.9em; /* Even smaller paragraph text */
-            }
-
-            hr {
-                width: 50%; /* Adjust width for very small screens */
-            }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to FenMart</h1>
-    <hr>
-    <p>fenmart.com is under construction</p>
-    <p>More updates coming soon—check back for news!</p>
+    <header>
+        <nav class="container">
+            <div class="logo">FenMart</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="showPage('products')">Products</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒
+                <span class="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Welcome to FenMart</h1>
+                    <p>Your Premium Online Marketplace</p>
+                    <button class="cta-button" onclick="showPage('products')">Shop Now</button>
+                </div>
+            </section>
+            
+            <div class="container">
+                <section class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">🎧</div>
+                        <h3 class="product-title">Premium Headphones</h3>
+                        <p class="product-price">$299.99</p>
+                        <button class="add-to-cart" onclick="addToCart('Premium Headphones', 299.99)">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">📱</div>
+                        <h3 class="product-title">Smart Phone</h3>
+                        <p class="product-price">$799.99</p>
+                        <button class="add-to-cart" onclick="addToCart('Smart Phone', 799.99)">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">💻</div>
+                        <h3 class="product-title">Gaming Laptop</h3>
+                        <p class="product-price">$1299.99</p>
+                        <button class="add-to-cart" onclick="addToCart('Gaming Laptop', 1299.99)">Add to Cart</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Products Page -->
+        <div id="products" class="page">
+            <div class="container">
+                <h2 style="text-align: center; color: white; font-size: 3rem; margin: 2rem 0;">Our Products</h2>
+                <section class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">🎧</div>
+                        <h3 class="product-title">Premium Headphones</h3>
+                        <p>High-quality wireless headphones with noise cancellation</p>
+                        <p class="product-price">$299.99</p>
+                        <button class="add-to-cart" onclick="addToCart('Premium Headphones', 299.99)">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">📱</div>
+                        <h3 class="product-title">Smart Phone</h3>
+                        <p>Latest smartphone with advanced camera and 5G connectivity</p>
+                        <p class="product-price">$799.99</p>
+                        <button class="add-to-cart" onclick="addToCart('Smart Phone', 799.99)">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">💻</div>
+                        <h3 class="product-title">Gaming Laptop</h3>
+                        <p>High-performance laptop perfect for gaming and work</p>
+                        <p class="product-price">$1299.99</p>
+                        <button class="add-to-cart" onclick="addToCart('Gaming Laptop', 1299.99)">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">⌚</div>
+                        <h3 class="product-title">Smart Watch</h3>
+                        <p>Feature-rich smartwatch with health monitoring</p>
+                        <p class="product-price">$399.99</p>
+                        <button class="add-to-cart" onclick="addToCart('Smart Watch', 399.99)">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🎮</div>
+                        <h3 class="product-title">Gaming Console</h3>
+                        <p>Next-gen gaming console with 4K capabilities</p>
+                        <p class="product-price">$499.99</p>
+                        <button class="add-to-cart" onclick="addToCart('Gaming Console', 499.99)">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">📷</div>
+                        <h3 class="product-title">Digital Camera</h3>
+                        <p>Professional camera for stunning photography</p>
+                        <p class="product-price">$899.99</p>
+                        <button class="add-to-cart" onclick="addToCart('Digital Camera', 899.99)">Add to Cart</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <div class="container">
+                <div class="about-content">
+                    <h2>About FenMart</h2>
+                    <div class="about-text">
+                        <p>Welcome to FenMart, your premier destination for high-quality electronics and tech products. Since our founding, we've been committed to bringing you the latest innovations in technology at competitive prices.</p>
+                        
+                        <p>Our mission is simple: to provide exceptional customer service while offering cutting-edge products from the world's leading brands. Whether you're looking for the latest smartphone, premium headphones, or professional-grade equipment, we've got you covered.</p>
+                        
+                        <p>At FenMart, we believe that technology should enhance your life, not complicate it. That's why we carefully curate our selection to include only the best products that meet our high standards for quality, performance, and value.</p>
+                        
+                        <p>Thank you for choosing FenMart. We're excited to be part of your tech journey!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="container">
+                <form class="contact-form" onsubmit="submitContact(event)">
+                    <h2 style="text-align: center; color: #333; margin-bottom: 2rem;">Contact Us</h2>
+                    
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="cta-button" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" onclick="toggleCart()">✕</button>
+        </div>
+        <div id="cartItems">
+            <p style="text-align: center; color: #666; margin-top: 2rem;">Your cart is empty</p>
+        </div>
+        <div class="cart-total" id="cartTotal">Total: $0.00</div>
+        <button class="cta-button" style="width: 100%; margin-top: 2rem;" onclick="checkout()">Checkout</button>
+    </div>
+
+    <script>
+        // Global variables
+        let cart = [];
+        let currentPage = 'home';
+
+        // Page navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageName).classList.add('active');
+            
+            // Update nav links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            currentPage = pageName;
+        }
+
+        // Shopping cart functions
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            updateCartDisplay();
+            showNotification(`${name} added to cart!`);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartCount = document.querySelector('.cart-count');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            
+            // Update cart items
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; color: #666; margin-top: 2rem;">Your cart is empty</p>';
+            } else {
+                cartItems.innerHTML = cart.map((item, index) => `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            $${item.price.toFixed(2)} x ${item.quantity}
+                        </div>
+                        <button onclick="removeFromCart(${index})" style="background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Remove</button>
+                    </div>
+                `).join('');
+            }
+            
+            // Update total
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+        }
+
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            cartSidebar.classList.toggle('open');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!', 'error');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            showNotification(`Checkout successful! Total: $${total.toFixed(2)}`, 'success');
+            cart = [];
+            updateCartDisplay();
+            toggleCart();
+        }
+
+        // Contact form
+        function submitContact(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            // Simulate form submission
+            showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+            event.target.reset();
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'error' ? '#ff4757' : type === 'success' ? '#2ed573' : '#667eea'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 3000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add slideIn and slideOut animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Initialize
+        updateCartDisplay();
+    </script>
 </body>
 </html>
