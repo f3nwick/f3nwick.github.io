@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FenMart - Your Premium Marketplace</title>
     <link rel="canonical" href="https://fenmart.com/" />
+    
+    <!-- Snipcart Integration -->
+    <link rel="preconnect" href="https://app.snipcart.com">
+    <link rel="preconnect" href="https://cdn.snipcart.com">
+    <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.css" />
     <style>
         * {
             margin: 0;
@@ -371,9 +376,32 @@
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Snipcart customization */
+        .snipcart-add-item {
+            width: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24) !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px !important;
+            border-radius: 8px !important;
+            font-weight: bold !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            text-align: center !important;
+        }
+
+        .snipcart-add-item:hover {
+            opacity: 0.9 !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Override Snipcart cart styles */
+        .snipcart {
+            --color-default: #ff6b6b !important;
+            --color-primary: #ff6b6b !important;
+            --color-secondary: #764ba2 !important;
         }
     </style>
 </head>
@@ -387,9 +415,9 @@
                 <li><a href="#" onclick="showPage('about')">About</a></li>
                 <li><a href="#" onclick="showPage('contact')">Contact</a></li>
             </ul>
-            <div class="cart-icon" onclick="toggleCart()">
+            <div class="cart-icon snipcart-checkout">
                 🛒
-                <span class="cart-count">0</span>
+                <span class="snipcart-items-count"></span>
             </div>
         </nav>
     </header>
@@ -411,19 +439,43 @@
                         <div class="product-image">🎧</div>
                         <h3 class="product-title">Premium Headphones</h3>
                         <p class="product-price">$299.99</p>
-                        <button class="add-to-cart" onclick="addToCart('Premium Headphones', 299.99)">Add to Cart</button>
+                        <button class="snipcart-add-item"
+                                data-item-id="headphones-001"
+                                data-item-price="299.99"
+                                data-item-url="/products/headphones"
+                                data-item-description="High-quality wireless headphones with noise cancellation"
+                                data-item-image="https://via.placeholder.com/300x200?text=🎧"
+                                data-item-name="Premium Headphones">
+                            Add to Cart
+                        </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">📱</div>
                         <h3 class="product-title">Smart Phone</h3>
                         <p class="product-price">$799.99</p>
-                        <button class="add-to-cart" onclick="addToCart('Smart Phone', 799.99)">Add to Cart</button>
+                        <button class="snipcart-add-item"
+                                data-item-id="phone-001"
+                                data-item-price="799.99"
+                                data-item-url="/products/smartphone"
+                                data-item-description="Latest smartphone with advanced camera and 5G connectivity"
+                                data-item-image="https://via.placeholder.com/300x200?text=📱"
+                                data-item-name="Smart Phone">
+                            Add to Cart
+                        </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">💻</div>
                         <h3 class="product-title">Gaming Laptop</h3>
                         <p class="product-price">$1299.99</p>
-                        <button class="add-to-cart" onclick="addToCart('Gaming Laptop', 1299.99)">Add to Cart</button>
+                        <button class="snipcart-add-item"
+                                data-item-id="laptop-001"
+                                data-item-price="1299.99"
+                                data-item-url="/products/gaming-laptop"
+                                data-item-description="High-performance laptop perfect for gaming and work"
+                                data-item-image="https://via.placeholder.com/300x200?text=💻"
+                                data-item-name="Gaming Laptop">
+                            Add to Cart
+                        </button>
                     </div>
                 </section>
             </div>
@@ -439,42 +491,90 @@
                         <h3 class="product-title">Premium Headphones</h3>
                         <p>High-quality wireless headphones with noise cancellation</p>
                         <p class="product-price">$299.99</p>
-                        <button class="add-to-cart" onclick="addToCart('Premium Headphones', 299.99)">Add to Cart</button>
+                        <button class="snipcart-add-item"
+                                data-item-id="headphones-001"
+                                data-item-price="299.99"
+                                data-item-url="/products/headphones"
+                                data-item-description="High-quality wireless headphones with noise cancellation"
+                                data-item-image="https://via.placeholder.com/300x200?text=🎧"
+                                data-item-name="Premium Headphones">
+                            Add to Cart
+                        </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">📱</div>
                         <h3 class="product-title">Smart Phone</h3>
                         <p>Latest smartphone with advanced camera and 5G connectivity</p>
                         <p class="product-price">$799.99</p>
-                        <button class="add-to-cart" onclick="addToCart('Smart Phone', 799.99)">Add to Cart</button>
+                        <button class="snipcart-add-item"
+                                data-item-id="phone-001"
+                                data-item-price="799.99"
+                                data-item-url="/products/smartphone"
+                                data-item-description="Latest smartphone with advanced camera and 5G connectivity"
+                                data-item-image="https://via.placeholder.com/300x200?text=📱"
+                                data-item-name="Smart Phone">
+                            Add to Cart
+                        </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">💻</div>
                         <h3 class="product-title">Gaming Laptop</h3>
                         <p>High-performance laptop perfect for gaming and work</p>
                         <p class="product-price">$1299.99</p>
-                        <button class="add-to-cart" onclick="addToCart('Gaming Laptop', 1299.99)">Add to Cart</button>
+                        <button class="snipcart-add-item"
+                                data-item-id="laptop-001"
+                                data-item-price="1299.99"
+                                data-item-url="/products/gaming-laptop"
+                                data-item-description="High-performance laptop perfect for gaming and work"
+                                data-item-image="https://via.placeholder.com/300x200?text=💻"
+                                data-item-name="Gaming Laptop">
+                            Add to Cart
+                        </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">⌚</div>
                         <h3 class="product-title">Smart Watch</h3>
                         <p>Feature-rich smartwatch with health monitoring</p>
                         <p class="product-price">$399.99</p>
-                        <button class="add-to-cart" onclick="addToCart('Smart Watch', 399.99)">Add to Cart</button>
+                        <button class="snipcart-add-item"
+                                data-item-id="watch-001"
+                                data-item-price="399.99"
+                                data-item-url="/products/smartwatch"
+                                data-item-description="Feature-rich smartwatch with health monitoring"
+                                data-item-image="https://via.placeholder.com/300x200?text=⌚"
+                                data-item-name="Smart Watch">
+                            Add to Cart
+                        </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">🎮</div>
                         <h3 class="product-title">Gaming Console</h3>
                         <p>Next-gen gaming console with 4K capabilities</p>
                         <p class="product-price">$499.99</p>
-                        <button class="add-to-cart" onclick="addToCart('Gaming Console', 499.99)">Add to Cart</button>
+                        <button class="snipcart-add-item"
+                                data-item-id="console-001"
+                                data-item-price="499.99"
+                                data-item-url="/products/gaming-console"
+                                data-item-description="Next-gen gaming console with 4K capabilities"
+                                data-item-image="https://via.placeholder.com/300x200?text=🎮"
+                                data-item-name="Gaming Console">
+                            Add to Cart
+                        </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">📷</div>
                         <h3 class="product-title">Digital Camera</h3>
                         <p>Professional camera for stunning photography</p>
                         <p class="product-price">$899.99</p>
-                        <button class="add-to-cart" onclick="addToCart('Digital Camera', 899.99)">Add to Cart</button>
+                        <button class="snipcart-add-item"
+                                data-item-id="camera-001"
+                                data-item-price="899.99"
+                                data-item-url="/products/digital-camera"
+                                data-item-description="Professional camera for stunning photography"
+                                data-item-image="https://via.placeholder.com/300x200?text=📷"
+                                data-item-name="Digital Camera">
+                            Add to Cart
+                        </button>
                     </div>
                 </section>
             </div>
@@ -530,22 +630,14 @@
         </div>
     </main>
 
-    <!-- Cart Sidebar -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h3>Shopping Cart</h3>
-            <button class="close-cart" onclick="toggleCart()">✕</button>
-        </div>
-        <div id="cartItems">
-            <p style="text-align: center; color: #666; margin-top: 2rem;">Your cart is empty</p>
-        </div>
-        <div class="cart-total" id="cartTotal">Total: $0.00</div>
-        <button class="cta-button" style="width: 100%; margin-top: 2rem;" onclick="checkout()">Checkout</button>
-    </div>
+    <!-- Cart Sidebar - Replaced with Snipcart -->
+    <div id="snipcart" data-api-key="YOUR_SNIPCART_PUBLIC_KEY" data-config-modal-style="side"></div>
+
+    <!-- Snipcart JavaScript -->
+    <script async src="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.js"></script>
 
     <script>
         // Global variables
-        let cart = [];
         let currentPage = 'home';
 
         // Page navigation
@@ -565,77 +657,6 @@
             
             event.target.classList.add('active');
             currentPage = pageName;
-        }
-
-        // Shopping cart functions
-        function addToCart(name, price) {
-            const existingItem = cart.find(item => item.name === name);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    name: name,
-                    price: price,
-                    quantity: 1
-                });
-            }
-            
-            updateCartDisplay();
-            showNotification(`${name} added to cart!`);
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartDisplay();
-        }
-
-        function updateCartDisplay() {
-            const cartCount = document.querySelector('.cart-count');
-            const cartItems = document.getElementById('cartItems');
-            const cartTotal = document.getElementById('cartTotal');
-            
-            // Update cart count
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
-            
-            // Update cart items
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p style="text-align: center; color: #666; margin-top: 2rem;">Your cart is empty</p>';
-            } else {
-                cartItems.innerHTML = cart.map((item, index) => `
-                    <div class="cart-item">
-                        <div>
-                            <strong>${item.name}</strong><br>
-                            $${item.price.toFixed(2)} x ${item.quantity}
-                        </div>
-                        <button onclick="removeFromCart(${index})" style="background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Remove</button>
-                    </div>
-                `).join('');
-            }
-            
-            // Update total
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            cartTotal.textContent = `Total: $${total.toFixed(2)}`;
-        }
-
-        function toggleCart() {
-            const cartSidebar = document.getElementById('cartSidebar');
-            cartSidebar.classList.toggle('open');
-        }
-
-        function checkout() {
-            if (cart.length === 0) {
-                showNotification('Your cart is empty!', 'error');
-                return;
-            }
-            
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            showNotification(`Checkout successful! Total: $${total.toFixed(2)}`, 'success');
-            cart = [];
-            updateCartDisplay();
-            toggleCart();
         }
 
         // Contact form
@@ -702,7 +723,10 @@
         });
 
         // Initialize
-        updateCartDisplay();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Snipcart is now handling cart functionality
+            console.log('FenMart loaded with Snipcart integration');
+        });
     </script>
 </body>
 </html>
