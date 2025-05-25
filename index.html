@@ -297,13 +297,13 @@
         .cart-sidebar {
             position: fixed;
             right: -400px;
-            top: 1;
+            top: 0;
             width: 400px;
             height: 100vh;
             background: white;
             box-shadow: -5px 0 20px rgba(0,0,0,0.1);
             transition: right 0.3s ease;
-            z-index: 999999;
+            z-index: 2000;
             padding: 2rem;
             overflow-y: auto;
         }
@@ -402,6 +402,11 @@
             --color-default: #ff6b6b !important;
             --color-primary: #ff6b6b !important;
             --color-secondary: #764ba2 !important;
+        }
+        
+        #snipcart {
+            z-index: 9999 !important;
+            position: relative;
         }
     </style>
 </head>
