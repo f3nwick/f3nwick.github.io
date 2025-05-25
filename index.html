@@ -8,7 +8,6 @@
     
     <link rel="preconnect" href="https://app.snipcart.com">
     <link rel="preconnect" href="https://cdn.snipcart.com">
-    <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.css" />
     <style>
         * {
             margin: 0;
@@ -49,7 +48,7 @@
             padding: 1rem 0;
         }
 
-        .logo-link { /* Added for the anchor tag around the logo */
+        .logo-link { /* For the anchor tag around the logo */
             text-decoration: none;
             cursor: pointer;
         }
@@ -182,7 +181,7 @@
             padding: 1.5rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
-            cursor: pointer; /* Removed default cursor as card itself is not directly clickable for navigation */
+            /* cursor: pointer; Removed default cursor as card itself is not directly clickable for navigation */
         }
 
         .product-card:hover {
@@ -253,7 +252,7 @@
             margin: 2rem auto; /* Center the form */
         }
         
-        .contact-form h2 { /* Added styling for contact form heading */
+        .contact-form h2 { /* Styling for contact form heading */
             text-align: center;
             color: #333;
             margin-bottom: 2rem;
@@ -323,16 +322,17 @@
             transform: translateY(-1px) !important;
         }
 
-        /* Override Snipcart cart styles */
+        /* Override Snipcart theme variables if needed */
         .snipcart {
-            --color-default: #ff6b6b !important;
-            --color-primary: #ff6b6b !important;
-            --color-secondary: #764ba2 !important;
+            --color-default: #ff6b6b !important; /* Example: Changes default text/icon color */
+            --color-primary: #ff6b6b !important; /* Example: Changes primary button backgrounds */
+            --color-secondary: #764ba2 !important; /* Example: Changes secondary elements */
         }
 
+        /* Styling for the Snipcart placeholder div */
         #snipcart {
-            z-index: 9999 !important;
-            position: relative; /* Ensure it doesn't overlap with fixed header if side cart is used */
+            z-index: 9999 !important; /* Keep it on top */
+            /* position: relative; Removed as Snipcart handles its own positioning for side modal */
         }
 
     </style>
@@ -348,7 +348,7 @@
         addProductBehavior: "none", // Or "opencart" or "summary"
     };
 
-    // Snipcart loader script (IIFE)
+    // Snipcart loader script (IIFE) - This script will inject Snipcart's JS and CSS
     (()=>{var c,d;(d=(c=window.SnipcartSettings).version)!=null||(c.version="3.0");var s,S;(S=(s=window.SnipcartSettings).timeoutDuration)!=null||(s.timeoutDuration=2750);var l,p;(p=(l=window.SnipcartSettings).domain)!=null||(l.domain="cdn.snipcart.com");var w,u;(u=(w=window.SnipcartSettings).protocol)!=null||(w.protocol="https");var f=window.SnipcartSettings.version.includes("v3.0.0-ci")||window.SnipcartSettings.version!="3.0"&&window.SnipcartSettings.version.localeCompare("3.4.0",void 0,{numeric:!0,sensitivity:"base"})===-1,m=["focus","mouseover","touchmove","scroll","keydown"];window.LoadSnipcart=o;document.readyState==="loading"?document.addEventListener("DOMContentLoaded",r):r();function r(){window.SnipcartSettings.loadStrategy?window.SnipcartSettings.loadStrategy==="on-user-interaction"&&(m.forEach(t=>document.addEventListener(t,o)),setTimeout(o,window.SnipcartSettings.timeoutDuration)):o()}var a=!1;function o(){if(a)return;a=!0;let t=document.getElementsByTagName("head")[0],e=document.querySelector("#snipcart"),i=document.querySelector(`script[src^="${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}"][src$="snipcart.js"]`),n=document.querySelector(`link[href^="${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}"][href$="snipcart.css"]`);e||(e=document.createElement("div"),e.id="snipcart",e.setAttribute("hidden","true"),document.body.appendChild(e)),v(e),i||(i=document.createElement("script"),i.src=`${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}/themes/v${window.SnipcartSettings.version}/default/snipcart.js`,i.async=!0,t.appendChild(i)),n||(n=document.createElement("link"),n.rel="stylesheet",n.type="text/css",n.href=`${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}/themes/v${window.SnipcartSettings.version}/default/snipcart.css`,t.prepend(n)),m.forEach(g=>document.removeEventListener(g,o))}function v(t){!f||(t.dataset.apiKey=window.SnipcartSettings.publicApiKey,window.SnipcartSettings.addProductBehavior&&(t.dataset.configAddProductBehavior=window.SnipcartSettings.addProductBehavior),window.SnipcartSettings.modalStyle&&(t.dataset.configModalStyle=window.SnipcartSettings.modalStyle),window.SnipcartSettings.currency&&(t.dataset.currency=window.SnipcartSettings.currency),window.SnipcartSettings.templatesUrl&&(t.dataset.templatesUrl=window.SnipcartSettings.templatesUrl))}})();
   </script>
 
@@ -365,8 +365,7 @@
             </ul>
             <div class="cart-icon snipcart-checkout">
                 🛒
-                <span class="snipcart-items-count"></span>
-            </div>
+                <span class="snipcart-items-count"></span> </div>
         </nav>
     </header>
 
@@ -391,7 +390,8 @@
                                 data-item-id="headphones-001"
                                 data-item-price="299.99"
                                 data-item-url="/index.html#headphones-001" data-item-description="High-quality wireless headphones with noise cancellation"
-                                data-item-image="https://placehold.co/300x200/FF6B6B/FFFFFF?text=🎧" data-item-name="Premium Headphones">
+                                data-item-image="https://placehold.co/300x200/FF6B6B/FFFFFF?text=🎧" 
+                                data-item-name="Premium Headphones">
                             Add to Cart
                         </button>
                     </div>
@@ -568,14 +568,14 @@
     <div id="snipcart" data-api-key="ZDc2NjAzNGYtMWNhYi00YWRmLTliNzUtNTc4ZDY2NTM1MWIyNjM4ODM3NDY4NjkwMjU4MjEz" data-config-modal-style="side" hidden></div>
 
     <script>
-        // Global variable to keep track of the current page
+        // Global variable to keep track of the current page ID
         let currentPageId = 'home';
 
         // Function to show a page and update active navigation link
         function showPage(pageName, clickedLink) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
+            // Hide all currently active pages
+            document.querySelectorAll('.page.active').forEach(activePage => {
+                activePage.classList.remove('active');
             });
             
             // Show the selected page
@@ -583,68 +583,62 @@
             if (targetPage) {
                 targetPage.classList.add('active');
             } else {
-                console.error(`Page with ID "${pageName}" not found.`);
-                // Optionally, show the home page as a fallback
-                document.getElementById('home').classList.add('active');
-                pageName = 'home'; // Update pageName for nav link handling
+                console.error(`Page with ID "${pageName}" not found. Defaulting to home.`);
+                document.getElementById('home').classList.add('active'); // Fallback to home
+                pageName = 'home'; // Ensure pageName reflects the actual displayed page
             }
             
-            // Update active state for navigation links
+            // Update active state for all navigation links
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.classList.remove('active');
             });
             
-            // If a link was clicked, set it to active
-            // If navigating via logo or CTA, find the corresponding nav link
+            // Determine the correct navigation link to activate
             let activeNavLink;
-            if (clickedLink) {
+            if (clickedLink && clickedLink.closest('.nav-links')) { // If a nav link itself was clicked
                 activeNavLink = clickedLink;
-            } else {
-                // Try to find the nav link corresponding to pageName
+            } else { // If navigated by logo, CTA, or programmatically
                 activeNavLink = document.querySelector(`.nav-links a[onclick*="'${pageName}'"]`);
             }
 
             if (activeNavLink) {
                 activeNavLink.classList.add('active');
-            } else if (pageName === 'home') { // Fallback for logo click if no specific link passed
-                 const homeLink = document.querySelector('.nav-links a[onclick*="\'home\'"]');
-                 if(homeLink) homeLink.classList.add('active');
             }
             
-            currentPageId = pageName;
-            window.scrollTo(0, 0); // Scroll to top when changing pages
-            return false; // Prevent default anchor behavior if called from an <a> tag
+            currentPageId = pageName; // Update the global current page ID
+            window.scrollTo(0, 0); // Scroll to the top of the page on navigation
+            return false; // Prevent default anchor link behavior (e.g., adding # to URL)
         }
 
-        // Contact form submission handler
+        // Asynchronous contact form submission handler
         async function submitContact(event) {
-            event.preventDefault(); 
+            event.preventDefault(); // Prevent the default form submission
 
             const form = event.target;
             const formData = new FormData(form);
             const submitButton = form.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.textContent;
             
-            submitButton.textContent = 'Sending...';
+            submitButton.textContent = 'Sending...'; // Provide user feedback
             submitButton.disabled = true;
 
             try {
-                const response = await fetch(form.action, {
-                    method: form.method,
+                const response = await fetch(form.action, { // form.action is the Formspree URL
+                    method: form.method, // form.method is 'POST'
                     body: formData,
                     headers: {
-                        'Accept': 'application/json'
+                        'Accept': 'application/json' // Request JSON response from Formspree
                     }
                 });
 
                 if (response.ok) {
                     showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
-                    form.reset(); 
+                    form.reset(); // Clear the form fields
                 } else {
-                    // Attempt to parse error from Formspree if available
-                    // const errorData = await response.json().catch(() => null); 
+                    // Handle HTTP errors from Formspree
+                    // const errorData = await response.json().catch(() => ({})); // Try to get error details
                     // let errorMessage = 'Oops! There was a problem submitting your form.';
-                    // if (errorData && errorData.errors && errorData.errors.length > 0) {
+                    // if (errorData.errors && errorData.errors.length > 0) {
                     //    errorMessage = errorData.errors.map(err => err.message).join(', ');
                     // } else if (response.statusText) {
                     //    errorMessage = `Error: ${response.statusText}`;
@@ -652,30 +646,33 @@
                     showNotification('Oops! There was a problem. Please try again.', 'error');
                 }
             } catch (error) {
+                // Handle network errors or other issues
                 console.error('Error submitting contact form:', error);
                 showNotification('An error occurred. Please check your connection and try again.', 'error');
             } finally {
+                // Restore button state
                 submitButton.textContent = originalButtonText;
                 submitButton.disabled = false;
             }
         }
 
-        // Notification system
+        // Function to display notifications to the user
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
-            // Basic styling for the notification
+            // Styling for the notification element
             notification.style.position = 'fixed';
-            notification.style.top = '100px'; // Adjusted to be below the fixed header
+            notification.style.top = '100px'; // Position below the fixed header
             notification.style.right = '20px';
             notification.style.padding = '15px 20px';
             notification.style.borderRadius = '8px';
             notification.style.color = 'white';
             notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
             notification.style.zIndex = '3000'; // Ensure it's above other content
-            notification.style.transition = 'opacity 0.3s ease, transform 0.3s ease'; // For smooth appearance/disappearance
-            notification.style.opacity = '0'; // Start hidden for animation
+            notification.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            notification.style.opacity = '0'; // Start transparent for fade-in
             notification.style.transform = 'translateX(100%)'; // Start off-screen for slide-in
 
+            // Set background color based on notification type
             if (type === 'error') {
                 notification.style.background = '#ff4757'; // Red for error
             } else if (type === 'success') {
@@ -687,51 +684,53 @@
             
             document.body.appendChild(notification);
 
-            // Animate in
-            setTimeout(() => {
+            // Animate the notification in
+            setTimeout(() => { // Timeout to allow initial styles to apply before transition
                 notification.style.opacity = '1';
                 notification.style.transform = 'translateX(0)';
-            }, 50); // Short delay to allow CSS to apply initial state
+            }, 50);
             
-            // Automatically remove after a few seconds
+            // Automatically remove the notification after a few seconds
             setTimeout(() => {
                 notification.style.opacity = '0';
                 notification.style.transform = 'translateX(100%)';
+                // Remove the element from DOM after the slide-out animation completes
                 setTimeout(() => {
                     if (document.body.contains(notification)) {
                          document.body.removeChild(notification);
                     }
-                }, 300); // Wait for animation to finish before removing
+                }, 300); // Corresponds to transition duration
             }, 3000);
         }
 
-        // Header scroll effect for slight background change
+        // Header scroll effect for slight background and shadow change
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
-            if (window.scrollY > 50) { // Reduced scroll threshold for earlier effect
+            if (window.scrollY > 50) { // Apply effect when scrolled more than 50px
                 header.style.background = 'rgba(255, 255, 255, 0.98)'; // Slightly more opaque
-                 header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)'; // More pronounced shadow
             } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+                header.style.background = 'rgba(255, 255, 255, 0.95)'; // Default background
+                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)'; // Default shadow
             }
         });
 
         // Initial setup when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function() {
-            // Set the initial page (home)
+            // Set the initial page (home) and active nav link
             showPage(currentPageId, document.querySelector('.nav-links a.active')); 
             
             console.log('FenMart initialized. Snipcart integration active.');
 
-            // Snipcart event listener for when the cart is closed
-            // This can be useful for updating UI elements if needed
+            // Optional: Snipcart event listeners for more advanced interactions
             document.addEventListener('snipcart.ready', () => {
                 Snipcart.events.on('cart.closed', () => {
                     console.log('Snipcart cart closed');
+                    // You could add logic here if needed when the cart closes
                 });
                 Snipcart.events.on('cart.opened', () => {
                     console.log('Snipcart cart opened');
+                    // You could add logic here if needed when the cart opens
                 });
             });
         });
