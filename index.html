@@ -6,8 +6,10 @@
     <title>FenMart - Your Premium Marketplace</title>
     <link rel="canonical" href="https://fenmart.com/" />
     
+    <!-- Snipcart Integration -->
     <link rel="preconnect" href="https://app.snipcart.com">
     <link rel="preconnect" href="https://cdn.snipcart.com">
+    <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.css" />
     <style>
         * {
             margin: 0;
@@ -46,11 +48,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
-        }
-
-        .logo-link { /* For the anchor tag around the logo */
-            text-decoration: none;
-            cursor: pointer;
         }
 
         .logo {
@@ -105,7 +102,7 @@
 
         /* Main Content */
         main {
-            margin-top: 80px; /* Adjust if header height changes */
+            margin-top: 80px;
             min-height: calc(100vh - 80px);
         }
 
@@ -181,7 +178,7 @@
             padding: 1.5rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
-            /* cursor: pointer; Removed default cursor as card itself is not directly clickable for navigation */
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -214,6 +211,23 @@
             font-weight: bold;
             color: #ff6b6b;
             margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
 
         /* About Section */
@@ -249,14 +263,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             max-width: 600px;
-            margin: 2rem auto; /* Center the form */
-        }
-        
-        .contact-form h2 { /* Styling for contact form heading */
-            text-align: center;
-            color: #333;
-            margin-bottom: 2rem;
-            font-size: 2.5rem;
+            margin: 2rem auto;
         }
 
         .form-group {
@@ -285,11 +292,63 @@
             outline: none;
             border-color: #ff6b6b;
         }
-        
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 2000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 2rem;
+            text-align: center;
+            color: #ff6b6b;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
-                display: none; /* Consider a hamburger menu for mobile */
+                display: none;
             }
 
             .hero-content h1 {
@@ -299,6 +358,22 @@
             .hero-content p {
                 font-size: 1.2rem;
             }
+
+            .cart-sidebar {
+                width: 100vw;
+                right: -100vw;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
         /* Snipcart customization */
@@ -322,65 +397,60 @@
             transform: translateY(-1px) !important;
         }
 
-        /* Override Snipcart theme variables if needed */
+        /* Override Snipcart cart styles */
         .snipcart {
-            --color-default: #ff6b6b !important; /* Example: Changes default text/icon color */
-            --color-primary: #ff6b6b !important; /* Example: Changes primary button backgrounds */
-            --color-secondary: #764ba2 !important; /* Example: Changes secondary elements */
+            --color-default: #ff6b6b !important;
+            --color-primary: #ff6b6b !important;
+            --color-secondary: #764ba2 !important;
         }
 
-        /* Styling for the Snipcart placeholder div */
         #snipcart {
-            z-index: 9999 !important; /* Keep it on top */
-            /* position: relative; Removed as Snipcart handles its own positioning for side modal */
+            z-index: 9999 !important;
+            position: relative;
         }
 
     </style>
 </head>
 <body>
   <script>
-    // Snipcart settings - ensure this is correctly configured
     window.SnipcartSettings = {
-        publicApiKey: "ZDc2NjAzNGYtMWNhYi00YWRmLTliNzUtNTc4ZDY2NTM1MWIyNjM4ODM3NDY4NjkwMjU4MjEz", // Replace with your actual public API key
-        loadStrategy: "on-user-interaction", // Recommended for performance
-        currency: "cad",
-        version: "3.7.1", // Use a specific version
-        addProductBehavior: "none", // Or "opencart" or "summary"
+        publicApiKey: "ZDc2NjAzNGYtMWNhYi00YWRmLTliNzUtNTc4ZDY2NTM1MWIyNjM4ODM3NDY4NjkwMjU4MjEz",
+        loadStrategy: "on-user-interaction",
+    currency: "cad"
+    version: "3.7.1"
+    addProductBehavior: "none",
     };
 
-    // Snipcart loader script (IIFE) - This script will inject Snipcart's JS and CSS
-    (()=>{var c,d;(d=(c=window.SnipcartSettings).version)!=null||(c.version="3.0");var s,S;(S=(s=window.SnipcartSettings).timeoutDuration)!=null||(s.timeoutDuration=2750);var l,p;(p=(l=window.SnipcartSettings).domain)!=null||(l.domain="cdn.snipcart.com");var w,u;(u=(w=window.SnipcartSettings).protocol)!=null||(w.protocol="https");var f=window.SnipcartSettings.version.includes("v3.0.0-ci")||window.SnipcartSettings.version!="3.0"&&window.SnipcartSettings.version.localeCompare("3.4.0",void 0,{numeric:!0,sensitivity:"base"})===-1,m=["focus","mouseover","touchmove","scroll","keydown"];window.LoadSnipcart=o;document.readyState==="loading"?document.addEventListener("DOMContentLoaded",r):r();function r(){window.SnipcartSettings.loadStrategy?window.SnipcartSettings.loadStrategy==="on-user-interaction"&&(m.forEach(t=>document.addEventListener(t,o)),setTimeout(o,window.SnipcartSettings.timeoutDuration)):o()}var a=!1;function o(){if(a)return;a=!0;let t=document.getElementsByTagName("head")[0],e=document.querySelector("#snipcart"),i=document.querySelector(`script[src^="${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}"][src$="snipcart.js"]`),n=document.querySelector(`link[href^="${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}"][href$="snipcart.css"]`);e||(e=document.createElement("div"),e.id="snipcart",e.setAttribute("hidden","true"),document.body.appendChild(e)),v(e),i||(i=document.createElement("script"),i.src=`${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}/themes/v${window.SnipcartSettings.version}/default/snipcart.js`,i.async=!0,t.appendChild(i)),n||(n=document.createElement("link"),n.rel="stylesheet",n.type="text/css",n.href=`${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}/themes/v${window.SnipcartSettings.version}/default/snipcart.css`,t.prepend(n)),m.forEach(g=>document.removeEventListener(g,o))}function v(t){!f||(t.dataset.apiKey=window.SnipcartSettings.publicApiKey,window.SnipcartSettings.addProductBehavior&&(t.dataset.configAddProductBehavior=window.SnipcartSettings.addProductBehavior),window.SnipcartSettings.modalStyle&&(t.dataset.configModalStyle=window.SnipcartSettings.modalStyle),window.SnipcartSettings.currency&&(t.dataset.currency=window.SnipcartSettings.currency),window.SnipcartSettings.templatesUrl&&(t.dataset.templatesUrl=window.SnipcartSettings.templatesUrl))}})();
-  </script>
-
+    (()=>{var c,d;(d=(c=window.SnipcartSettings).version)!=null||(c.version="3.0");var s,S;(S=(s=window.SnipcartSettings).timeoutDuration)!=null||(s.timeoutDuration=2750);var l,p;(p=(l=window.SnipcartSettings).domain)!=null||(l.domain="cdn.snipcart.com");var w,u;(u=(w=window.SnipcartSettings).protocol)!=null||(w.protocol="https");var f=window.SnipcartSettings.version.includes("v3.0.0-ci")||window.SnipcartSettings.version!="3.0"&&window.SnipcartSettings.version.localeCompare("3.4.0",void 0,{numeric:!0,sensitivity:"base"})===-1,m=["focus","mouseover","touchmove","scroll","keydown"];window.LoadSnipcart=o;document.readyState==="loading"?document.addEventListener("DOMContentLoaded",r):r();function r(){window.SnipcartSettings.loadStrategy?window.SnipcartSettings.loadStrategy==="on-user-interaction"&&(m.forEach(t=>document.addEventListener(t,o)),setTimeout(o,window.SnipcartSettings.timeoutDuration)):o()}var a=!1;function o(){if(a)return;a=!0;let t=document.getElementsByTagName("head")[0],e=document.querySelector("#snipcart"),i=document.querySelector(`src[src^="${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}"][src$="snipcart.js"]`),n=document.querySelector(`link[href^="${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}"][href$="snipcart.css"]`);e||(e=document.createElement("div"),e.id="snipcart",e.setAttribute("hidden","true"),document.body.appendChild(e)),v(e),i||(i=document.createElement("script"),i.src=`${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}/themes/v${window.SnipcartSettings.version}/default/snipcart.js`,i.async=!0,t.appendChild(i)),n||(n=document.createElement("link"),n.rel="stylesheet",n.type="text/css",n.href=`${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}/themes/v${window.SnipcartSettings.version}/default/snipcart.css`,t.prepend(n)),m.forEach(g=>document.removeEventListener(g,o))}function v(t){!f||(t.dataset.apiKey=window.SnipcartSettings.publicApiKey,window.SnipcartSettings.addProductBehavior&&(t.dataset.configAddProductBehavior=window.SnipcartSettings.addProductBehavior),window.SnipcartSettings.modalStyle&&(t.dataset.configModalStyle=window.SnipcartSettings.modalStyle),window.SnipcartSettings.currency&&(t.dataset.currency=window.SnipcartSettings.currency),window.SnipcartSettings.templatesUrl&&(t.dataset.templatesUrl=window.SnipcartSettings.templatesUrl))}})();
+</script>
     <header>
         <nav class="container">
-            <a href="#" onclick="showPage('home'); return false;" class="logo-link">
-                <div class="logo">FenMart</div>
-            </a>
+            <div class="logo">FenMart</div>
             <ul class="nav-links">
-                <li><a href="#" onclick="showPage('home', this)" class="active">Home</a></li>
-                <li><a href="#" onclick="showPage('products', this)">Products</a></li>
-                <li><a href="#" onclick="showPage('about', this)">About</a></li>
-                <li><a href="#" onclick="showPage('contact', this)">Contact</a></li>
+                <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="showPage('products')">Products</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
             </ul>
             <div class="cart-icon snipcart-checkout">
                 🛒
-                <span class="snipcart-items-count"></span> </div>
+                <span class="snipcart-items-count"></span>
+            </div>
         </nav>
     </header>
 
     <main>
+        <!-- Home Page -->
         <div id="home" class="page active">
             <section class="hero">
                 <div class="hero-content">
                     <h1>Welcome to FenMart</h1>
                     <p>Your Premium Online Marketplace</p>
-                    <button class="cta-button" onclick="showPage('products', document.querySelector('.nav-links a[onclick*=\'products\']'))">Shop Now</button>
+                    <button class="cta-button" onclick="showPage('products')">Shop Now</button>
                 </div>
             </section>
             
             <div class="container">
-                <h2 style="text-align: center; color: white; font-size: 2.5rem; margin: 2rem 0;">Featured Products</h2>
                 <section class="products-grid">
                     <div class="product-card">
                         <div class="product-image">🎧</div>
@@ -389,37 +459,38 @@
                         <button class="snipcart-add-item"
                                 data-item-id="headphones-001"
                                 data-item-price="299.99"
-                                data-item-url="/index.html#headphones-001" data-item-description="High-quality wireless headphones with noise cancellation"
-                                data-item-image="https://placehold.co/300x200/FF6B6B/FFFFFF?text=🎧" 
+                                data-item-url="/products/headphones"
+                                data-item-description="High-quality wireless headphones with noise cancellation"
+                                data-item-image="https://via.placeholder.com/300x200?text=🎧"
                                 data-item-name="Premium Headphones">
                             Add to Cart
                         </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">📱</div>
-                        <h3 class="product-title">Smart Phone X</h3>
+                        <h3 class="product-title">Smart Phone</h3>
                         <p class="product-price">$799.99</p>
                         <button class="snipcart-add-item"
                                 data-item-id="phone-001"
                                 data-item-price="799.99"
-                                data-item-url="/index.html#phone-001"
+                                data-item-url="/products/smartphone"
                                 data-item-description="Latest smartphone with advanced camera and 5G connectivity"
-                                data-item-image="https://placehold.co/300x200/EE5A24/FFFFFF?text=📱"
-                                data-item-name="Smart Phone X">
+                                data-item-image="https://via.placeholder.com/300x200?text=📱"
+                                data-item-name="Smart Phone">
                             Add to Cart
                         </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">💻</div>
-                        <h3 class="product-title">Gaming Laptop Pro</h3>
+                        <h3 class="product-title">Gaming Laptop</h3>
                         <p class="product-price">$1299.99</p>
                         <button class="snipcart-add-item"
                                 data-item-id="laptop-001"
                                 data-item-price="1299.99"
-                                data-item-url="/index.html#laptop-001"
+                                data-item-url="/products/gaming-laptop"
                                 data-item-description="High-performance laptop perfect for gaming and work"
-                                data-item-image="https://placehold.co/300x200/667EEA/FFFFFF?text=💻"
-                                data-item-name="Gaming Laptop Pro">
+                                data-item-image="https://via.placeholder.com/300x200?text=💻"
+                                data-item-name="Gaming Laptop">
                             Add to Cart
                         </button>
                     </div>
@@ -427,6 +498,7 @@
             </div>
         </div>
 
+        <!-- Products Page -->
         <div id="products" class="page">
             <div class="container">
                 <h2 style="text-align: center; color: white; font-size: 3rem; margin: 2rem 0;">Our Products</h2>
@@ -434,90 +506,90 @@
                     <div class="product-card">
                         <div class="product-image">🎧</div>
                         <h3 class="product-title">Premium Headphones</h3>
-                        <p>High-quality wireless headphones with noise cancellation.</p>
+                        <p>High-quality wireless headphones with noise cancellation</p>
                         <p class="product-price">$299.99</p>
                         <button class="snipcart-add-item"
                                 data-item-id="headphones-001"
                                 data-item-price="299.99"
-                                data-item-url="/index.html#headphones-001"
+                                data-item-url="/products/headphones"
                                 data-item-description="High-quality wireless headphones with noise cancellation"
-                                data-item-image="https://placehold.co/300x200/FF6B6B/FFFFFF?text=🎧"
+                                data-item-image="https://via.placeholder.com/300x200?text=🎧"
                                 data-item-name="Premium Headphones">
                             Add to Cart
                         </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">📱</div>
-                        <h3 class="product-title">Smart Phone X</h3>
-                        <p>Latest smartphone with advanced camera and 5G connectivity.</p>
+                        <h3 class="product-title">Smart Phone</h3>
+                        <p>Latest smartphone with advanced camera and 5G connectivity</p>
                         <p class="product-price">$799.99</p>
                         <button class="snipcart-add-item"
                                 data-item-id="phone-001"
                                 data-item-price="799.99"
-                                data-item-url="/index.html#phone-001"
+                                data-item-url="/products/smartphone"
                                 data-item-description="Latest smartphone with advanced camera and 5G connectivity"
-                                data-item-image="https://placehold.co/300x200/EE5A24/FFFFFF?text=📱"
-                                data-item-name="Smart Phone X">
+                                data-item-image="https://via.placeholder.com/300x200?text=📱"
+                                data-item-name="Smart Phone">
                             Add to Cart
                         </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">💻</div>
-                        <h3 class="product-title">Gaming Laptop Pro</h3>
-                        <p>High-performance laptop perfect for gaming and work.</p>
+                        <h3 class="product-title">Gaming Laptop</h3>
+                        <p>High-performance laptop perfect for gaming and work</p>
                         <p class="product-price">$1299.99</p>
                         <button class="snipcart-add-item"
                                 data-item-id="laptop-001"
                                 data-item-price="1299.99"
-                                data-item-url="/index.html#laptop-001"
+                                data-item-url="/products/gaming-laptop"
                                 data-item-description="High-performance laptop perfect for gaming and work"
-                                data-item-image="https://placehold.co/300x200/667EEA/FFFFFF?text=💻"
-                                data-item-name="Gaming Laptop Pro">
+                                data-item-image="https://via.placeholder.com/300x200?text=💻"
+                                data-item-name="Gaming Laptop">
                             Add to Cart
                         </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">⌚</div>
-                        <h3 class="product-title">Smart Watch Fit</h3>
-                        <p>Feature-rich smartwatch with health monitoring and GPS.</p>
+                        <h3 class="product-title">Smart Watch</h3>
+                        <p>Feature-rich smartwatch with health monitoring</p>
                         <p class="product-price">$399.99</p>
                         <button class="snipcart-add-item"
                                 data-item-id="watch-001"
                                 data-item-price="399.99"
-                                data-item-url="/index.html#watch-001"
-                                data-item-description="Feature-rich smartwatch with health monitoring and GPS"
-                                data-item-image="https://placehold.co/300x200/764BA2/FFFFFF?text=⌚"
-                                data-item-name="Smart Watch Fit">
+                                data-item-url="/products/smartwatch"
+                                data-item-description="Feature-rich smartwatch with health monitoring"
+                                data-item-image="https://via.placeholder.com/300x200?text=⌚"
+                                data-item-name="Smart Watch">
                             Add to Cart
                         </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">🎮</div>
-                        <h3 class="product-title">Gaming Console Ultra</h3>
-                        <p>Next-gen gaming console with 8K capabilities and VR support.</p>
+                        <h3 class="product-title">Gaming Console</h3>
+                        <p>Next-gen gaming console with 4K capabilities</p>
                         <p class="product-price">$499.99</p>
                         <button class="snipcart-add-item"
                                 data-item-id="console-001"
                                 data-item-price="499.99"
-                                data-item-url="/index.html#console-001"
-                                data-item-description="Next-gen gaming console with 8K capabilities and VR support"
-                                data-item-image="https://placehold.co/300x200/FF4757/FFFFFF?text=🎮"
-                                data-item-name="Gaming Console Ultra">
+                                data-item-url="/products/gaming-console"
+                                data-item-description="Next-gen gaming console with 4K capabilities"
+                                data-item-image="https://via.placeholder.com/300x200?text=🎮"
+                                data-item-name="Gaming Console">
                             Add to Cart
                         </button>
                     </div>
                     <div class="product-card">
                         <div class="product-image">📷</div>
-                        <h3 class="product-title">Pro Digital Camera</h3>
-                        <p>Professional DSLR camera for stunning photography and videography.</p>
+                        <h3 class="product-title">Digital Camera</h3>
+                        <p>Professional camera for stunning photography</p>
                         <p class="product-price">$899.99</p>
                         <button class="snipcart-add-item"
                                 data-item-id="camera-001"
                                 data-item-price="899.99"
-                                data-item-url="/index.html#camera-001"
-                                data-item-description="Professional DSLR camera for stunning photography and videography"
-                                data-item-image="https://placehold.co/300x200/2ED573/FFFFFF?text=📷"
-                                data-item-name="Pro Digital Camera">
+                                data-item-url="/products/digital-camera"
+                                data-item-description="Professional camera for stunning photography"
+                                data-item-image="https://via.placeholder.com/300x200?text=📷"
+                                data-item-name="Digital Camera">
                             Add to Cart
                         </button>
                     </div>
@@ -525,214 +597,186 @@
             </div>
         </div>
 
+        <!-- About Page -->
         <div id="about" class="page">
             <div class="container">
                 <div class="about-content">
                     <h2>About FenMart</h2>
                     <div class="about-text">
                         <p>Welcome to FenMart, your premier destination for high-quality electronics and tech products. Since our founding, we've been committed to bringing you the latest innovations in technology at competitive prices.</p>
+                        
                         <p>Our mission is simple: to provide exceptional customer service while offering cutting-edge products from the world's leading brands. Whether you're looking for the latest smartphone, premium headphones, or professional-grade equipment, we've got you covered.</p>
+                        
                         <p>At FenMart, we believe that technology should enhance your life, not complicate it. That's why we carefully curate our selection to include only the best products that meet our high standards for quality, performance, and value.</p>
+                        
                         <p>Thank you for choosing FenMart. We're excited to be part of your tech journey!</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Contact Page -->
         <div id="contact" class="page">
             <div class="container">
                 <form class="contact-form" action="https://formspree.io/f/meogbazl" method="POST" onsubmit="submitContact(event)">
-                    <h2>Contact Us</h2>
+                    <h2 style="text-align: center; color: #333; margin-bottom: 2rem;">Contact Us</h2>
+                    
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" required>
                     </div>
+                    
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" required>
                     </div>
+                    
                     <div class="form-group">
                         <label for="subject">Subject</label>
                         <input type="text" id="subject" name="subject" required>
                     </div>
+                    
                     <div class="form-group">
                         <label for="message">Message</label>
                         <textarea id="message" name="message" rows="5" required></textarea>
                     </div>
+                    
                     <button type="submit" class="cta-button" style="width: 100%;">Send Message</button>
                 </form>
             </div>
         </div>
     </main>
 
-    <div id="snipcart" data-api-key="ZDc2NjAzNGYtMWNhYi00YWRmLTliNzUtNTc4ZDY2NTM1MWIyNjM4ODM3NDY4NjkwMjU4MjEz" data-config-modal-style="side" hidden></div>
+    <!-- Cart Sidebar - Replaced with Snipcart -->
+    <div id="snipcart" data-api-key="ZDc2NjAzNGYtMWNhYi00YWRmLTliNzUtNTc4ZDY2NTM1MWIyNjM4ODM3NDY4NjkwMjU4MjEz" data-config-modal-style="side"></div>
+
+    <!-- Snipcart JavaScript -->
+    <script async src="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.js"></script>
 
     <script>
-        // Global variable to keep track of the current page ID
-        let currentPageId = 'home';
+        // Global variables
+        let currentPage = 'home';
 
-        // Function to show a page and update active navigation link
-        function showPage(pageName, clickedLink) {
-            // Hide all currently active pages
-            document.querySelectorAll('.page.active').forEach(activePage => {
-                activePage.classList.remove('active');
+        // Page navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
             });
             
-            // Show the selected page
-            const targetPage = document.getElementById(pageName);
-            if (targetPage) {
-                targetPage.classList.add('active');
-            } else {
-                console.error(`Page with ID "${pageName}" not found. Defaulting to home.`);
-                document.getElementById('home').classList.add('active'); // Fallback to home
-                pageName = 'home'; // Ensure pageName reflects the actual displayed page
-            }
+            // Show selected page
+            document.getElementById(pageName).classList.add('active');
             
-            // Update active state for all navigation links
+            // Update nav links
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.classList.remove('active');
             });
             
-            // Determine the correct navigation link to activate
-            let activeNavLink;
-            if (clickedLink && clickedLink.closest('.nav-links')) { // If a nav link itself was clicked
-                activeNavLink = clickedLink;
-            } else { // If navigated by logo, CTA, or programmatically
-                activeNavLink = document.querySelector(`.nav-links a[onclick*="'${pageName}'"]`);
-            }
-
-            if (activeNavLink) {
-                activeNavLink.classList.add('active');
-            }
-            
-            currentPageId = pageName; // Update the global current page ID
-            window.scrollTo(0, 0); // Scroll to the top of the page on navigation
-            return false; // Prevent default anchor link behavior (e.g., adding # to URL)
+            event.target.classList.add('active');
+            currentPage = pageName;
         }
 
-        // Asynchronous contact form submission handler
-        async function submitContact(event) {
-            event.preventDefault(); // Prevent the default form submission
+        // Contact form
+async function submitContact(event) {
+            event.preventDefault(); // Prevent default form submission
 
             const form = event.target;
             const formData = new FormData(form);
+            // const data = Object.fromEntries(formData); // Good for debugging, but fetch can take FormData directly
+
+            // Show a temporary loading state on the button if you like
             const submitButton = form.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.textContent;
-            
-            submitButton.textContent = 'Sending...'; // Provide user feedback
+            submitButton.textContent = 'Sending...';
             submitButton.disabled = true;
 
             try {
-                const response = await fetch(form.action, { // form.action is the Formspree URL
-                    method: form.method, // form.method is 'POST'
+                const response = await fetch(form.action, { // form.action will be your Formspree URL
+                    method: form.method, // form.method will be 'POST'
                     body: formData,
                     headers: {
-                        'Accept': 'application/json' // Request JSON response from Formspree
+                        'Accept': 'application/json' // Formspree can reply with JSON
                     }
                 });
 
                 if (response.ok) {
+                    // const responseData = await response.json(); // If Formspree sends back JSON
                     showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
-                    form.reset(); // Clear the form fields
+                    form.reset(); // Clear the form
                 } else {
-                    // Handle HTTP errors from Formspree
-                    // const errorData = await response.json().catch(() => ({})); // Try to get error details
+                    // Handle errors from Formspree (e.g., validation errors)
+                    // const errorData = await response.json();
                     // let errorMessage = 'Oops! There was a problem submitting your form.';
-                    // if (errorData.errors && errorData.errors.length > 0) {
-                    //    errorMessage = errorData.errors.map(err => err.message).join(', ');
-                    // } else if (response.statusText) {
-                    //    errorMessage = `Error: ${response.statusText}`;
+                    // if (errorData && errorData.errors) {
+                    //     errorMessage = errorData.errors.map(error => error.message).join(', ');
                     // }
                     showNotification('Oops! There was a problem. Please try again.', 'error');
                 }
             } catch (error) {
-                // Handle network errors or other issues
-                console.error('Error submitting contact form:', error);
-                showNotification('An error occurred. Please check your connection and try again.', 'error');
+                console.error('Error submitting form:', error);
+                showNotification('An error occurred. Please try again later.', 'error');
             } finally {
-                // Restore button state
                 submitButton.textContent = originalButtonText;
                 submitButton.disabled = false;
             }
         }
 
-        // Function to display notifications to the user
+
+        // Notification system
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
-            // Styling for the notification element
-            notification.style.position = 'fixed';
-            notification.style.top = '100px'; // Position below the fixed header
-            notification.style.right = '20px';
-            notification.style.padding = '15px 20px';
-            notification.style.borderRadius = '8px';
-            notification.style.color = 'white';
-            notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
-            notification.style.zIndex = '3000'; // Ensure it's above other content
-            notification.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-            notification.style.opacity = '0'; // Start transparent for fade-in
-            notification.style.transform = 'translateX(100%)'; // Start off-screen for slide-in
-
-            // Set background color based on notification type
-            if (type === 'error') {
-                notification.style.background = '#ff4757'; // Red for error
-            } else if (type === 'success') {
-                notification.style.background = '#2ed573'; // Green for success
-            } else {
-                notification.style.background = '#667eea'; // Default blue for info
-            }
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'error' ? '#ff4757' : type === 'success' ? '#2ed573' : '#667eea'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 3000;
+                animation: slideIn 0.3s ease;
+            `;
             notification.textContent = message;
             
             document.body.appendChild(notification);
-
-            // Animate the notification in
-            setTimeout(() => { // Timeout to allow initial styles to apply before transition
-                notification.style.opacity = '1';
-                notification.style.transform = 'translateX(0)';
-            }, 50);
             
-            // Automatically remove the notification after a few seconds
             setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transform = 'translateX(100%)';
-                // Remove the element from DOM after the slide-out animation completes
+                notification.style.animation = 'slideOut 0.3s ease';
                 setTimeout(() => {
-                    if (document.body.contains(notification)) {
-                         document.body.removeChild(notification);
-                    }
-                }, 300); // Corresponds to transition duration
+                    document.body.removeChild(notification);
+                }, 300);
             }, 3000);
         }
 
-        // Header scroll effect for slight background and shadow change
+        // Add slideIn and slideOut animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
-            if (window.scrollY > 50) { // Apply effect when scrolled more than 50px
-                header.style.background = 'rgba(255, 255, 255, 0.98)'; // Slightly more opaque
-                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)'; // More pronounced shadow
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
             } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)'; // Default background
-                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)'; // Default shadow
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
             }
         });
 
-        // Initial setup when the DOM is fully loaded
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Set the initial page (home) and active nav link
-            showPage(currentPageId, document.querySelector('.nav-links a.active')); 
-            
-            console.log('FenMart initialized. Snipcart integration active.');
-
-            // Optional: Snipcart event listeners for more advanced interactions
-            document.addEventListener('snipcart.ready', () => {
-                Snipcart.events.on('cart.closed', () => {
-                    console.log('Snipcart cart closed');
-                    // You could add logic here if needed when the cart closes
-                });
-                Snipcart.events.on('cart.opened', () => {
-                    console.log('Snipcart cart opened');
-                    // You could add logic here if needed when the cart opens
-                });
-            });
+            // Snipcart is now handling cart functionality
+            console.log('FenMart loaded with Snipcart integration');
         });
     </script>
 </body>
