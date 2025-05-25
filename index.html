@@ -409,11 +409,6 @@
             position: relative;
         }
 
-        body.prevent-scroll {
-            overflow: hidden;
-            padding-right: 17px; /* Compensate for scrollbar width */
-        }
-
     </style>
 </head>
 <body>
@@ -782,17 +777,26 @@ async function submitContact(event) {
         document.addEventListener('DOMContentLoaded', function() {
             // Snipcart is now handling cart functionality
             console.log('FenMart loaded with Snipcart integration');
-        // Detect when Snipcart cart opens/closes to fix layout shift
-            document.addEventListener('snipcart.ready', () => {
-                Snipcart.events.on('cart.opened', () => {
-                    document.body.classList.add('prevent-scroll');
-                });
-
-                Snipcart.events.on('cart.closed', () => {
-                    document.body.classList.remove('prevent-scroll');
-                });
-            });
         });
+
+    function fixLayoutShiftOnCartToggle() {
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+        Snipcart.events.on('cart.opened', () => {
+            document.body.style.paddingRight = `${scrollbarWidth}px`;
+            document.body.style.overflow = 'hidden';
+        });
+
+        Snipcart.events.on('cart.closed', () => {
+            document.body.style.paddingRight = '';
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Wait for Snipcart to load before attaching event listeners
+    document.addEventListener('snipcart.ready', () => {
+        fixLayoutShiftOnCartToggle();
+    });
     </script>
 </body>
 </html>
