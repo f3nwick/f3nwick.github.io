@@ -612,7 +612,7 @@
         <!-- Contact Page -->
         <div id="contact" class="page">
             <div class="container">
-                <form class="contact-form" onsubmit="submitContact(event)" action="https://formspree.io/f/meogbazl" method="POST">
+                <form class="contact-form" action="https://formspree.io/f/meogbazl" method="POST" onsubmit="submitContact(event)">
                     <h2 style="text-align: center; color: #333; margin-bottom: 2rem;">Contact Us</h2>
                     
                     <div class="form-group">
@@ -642,7 +642,7 @@
     </main>
 
     <!-- Cart Sidebar - Replaced with Snipcart -->
-    <div id="snipcart" data-config-modal-style="side"></div>
+    <div id="snipcart" data-api-key="ZDc2NjAzNGYtMWNhYi00YWRmLTliNzUtNTc4ZDY2NTM1MWIyNjM4ODM3NDY4NjkwMjU4MjEz" data-config-modal-style="side"></div>
 
     <!-- Snipcart JavaScript -->
     <script async src="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.js"></script>
@@ -671,7 +671,7 @@
         }
 
         // Contact form
-            async function submitContact(event) {
+async function submitContact(event) {
             event.preventDefault(); // Prevent default form submission
 
             const form = event.target;
@@ -714,6 +714,7 @@
                 submitButton.disabled = false;
             }
         }
+
 
         // Notification system
         function showNotification(message, type = 'info') {
