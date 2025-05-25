@@ -25,10 +25,6 @@
             min-height: 100vh;
         }
 
-        html {
-            overflow-y: scroll;
-        }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -412,6 +408,12 @@
             z-index: 9999 !important;
             position: relative;
         }
+
+        body.prevent-scroll {
+            overflow: hidden;
+            padding-right: 17px; /* Compensate for scrollbar width */
+        }
+
     </style>
 </head>
 <body>
@@ -780,6 +782,16 @@ async function submitContact(event) {
         document.addEventListener('DOMContentLoaded', function() {
             // Snipcart is now handling cart functionality
             console.log('FenMart loaded with Snipcart integration');
+        // Detect when Snipcart cart opens/closes to fix layout shift
+            document.addEventListener('snipcart.ready', () => {
+                Snipcart.events.on('cart.opened', () => {
+                    document.body.classList.add('prevent-scroll');
+                });
+
+                Snipcart.events.on('cart.closed', () => {
+                    document.body.classList.remove('prevent-scroll');
+                });
+            });
         });
     </script>
 </body>
