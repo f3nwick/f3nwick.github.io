@@ -6,11 +6,30 @@
     <title>FenMart - Your Premium Marketplace</title>
     <link rel="canonical" href="https://fenmart.com/" />
     
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <!-- Snipcart Integration -->
     <link rel="preconnect" href="https://app.snipcart.com">
     <link rel="preconnect" href="https://cdn.snipcart.com">
     <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.css" />
+    
     <style>
+        /* CSS Custom Properties for easy theming */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --accent-gradient: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* General Body and Reset Styles */
         * {
             margin: 0;
             padding: 0;
@@ -18,11 +37,33 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-primary);
+            background: var(--primary-gradient);
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background for visual appeal */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 226, 0.2) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
         }
 
         .container {
@@ -31,16 +72,23 @@
             padding: 0 20px;
         }
 
-        /* Header */
+        /* Header and Navigation */
         header {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-light);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-heavy);
         }
 
         nav {
@@ -48,222 +96,336 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
+            height: 80px;
         }
 
         .logo {
             font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            font-weight: 800;
+            background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: var(--text-primary);
             font-weight: 500;
-            transition: color 0.3s ease;
-            cursor: pointer;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
         }
 
-        .nav-links a:hover, .nav-links a.active {
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
             color: #ff6b6b;
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .cart-container {
+            position: relative;
         }
 
         .cart-icon {
-            position: relative;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: #ff6b6b;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #ff4757;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
         }
 
-        /* Main Content */
+        .cart-icon:hover {
+            background: rgba(255, 107, 107, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .cart-icon .emoji {
+            font-size: 1.2rem;
+        }
+
+        /* Main Content and Page Switching */
         main {
-            margin-top: 80px;
-            min-height: calc(100vh - 80px);
+            padding-top: 80px; /* Adjust for fixed header */
+            min-height: 100vh;
         }
 
         .page {
             display: none;
-            animation: fadeIn 0.5s ease-in;
+            animation: fadeInUp 0.6s ease-out;
         }
 
         .page.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23667eea" width="1200" height="800"/><circle fill="%23764ba2" cx="600" cy="400" r="300" opacity="0.6"/></svg>');
-            background-size: cover;
-            background-position: center;
-            height: 80vh;
+            height: calc(90vh - 80px);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
         }
 
         .hero-content h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            letter-spacing: -2px;
+            line-height: 1.1;
         }
 
         .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
 
         .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-gradient);
             color: white;
-            padding: 15px 30px;
+            padding: 18px 36px;
             text-decoration: none;
             border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
             cursor: pointer;
             border: none;
-            font-size: 1.1rem;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
         }
 
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
         }
 
-        /* Product Grid */
+        /* Products Section */
+        .products-section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
         }
 
         .product-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--accent-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .product-card:hover::before {
+            transform: scaleX(1);
         }
 
         .product-image {
             width: 100%;
             height: 200px;
-            background: linear-gradient(45deg, #f1f2f6, #ddd);
-            border-radius: 10px;
-            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            color: #666;
+            font-size: 4rem;
+            color: #6c757d;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .product-title {
-            font-size: 1.3rem;
-            font-weight: bold;
+            font-size: 1.4rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            color: #333;
+            color: var(--text-primary);
+        }
+
+        .product-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            flex-grow: 1;
         }
 
         .product-price {
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-size: 1.8rem;
+            font-weight: 700;
             color: #ff6b6b;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .add-to-cart {
             width: 100%;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            background: var(--accent-gradient);
             color: white;
             border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: auto;
         }
 
         .add-to-cart:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
         }
 
-        /* About Section */
-        .about-content {
-            background: white;
-            margin: 2rem 0;
+        /* Content Pages (About, Contact) */
+        .content-page-wrapper {
+             padding: 5rem 0;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--glass-border);
         }
 
-        .about-content h2 {
+        .content-card h2 {
             font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 2rem;
-            color: #333;
+            color: var(--text-primary);
             text-align: center;
         }
 
         .about-text {
             font-size: 1.1rem;
             line-height: 1.8;
-            color: #666;
+            color: var(--text-secondary);
             max-width: 800px;
             margin: 0 auto;
-            text-align: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
         }
 
         /* Contact Form */
         .contact-form {
-            background: white;
-            margin: 2rem 0;
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             max-width: 600px;
-            margin: 2rem auto;
+            margin: 2rem auto 0;
         }
 
         .form-group {
@@ -273,168 +435,140 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #333;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
+            padding: 14px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.9);
+            font-family: inherit;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
         }
 
-        /* Cart Sidebar */
-        .cart-sidebar {
-            position: fixed;
-            right: -400px;
-            top: 0;
-            width: 400px;
-            height: 100vh;
-            background: white;
-            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-            transition: right 0.3s ease;
-            z-index: 2000;
-            padding: 2rem;
-            overflow-y: auto;
-        }
-
-        .cart-sidebar.open {
-            right: 0;
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #eee;
-        }
-
-        .close-cart {
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
-            color: #666;
+            color: var(--text-primary);
+            z-index: 2000;
         }
 
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid #eee;
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            box-shadow: var(--shadow-heavy);
+            z-index: 3000;
+            backdrop-filter: blur(10px);
+            animation: slideInRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .cart-total {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-top: 2rem;
-            text-align: center;
-            color: #ff6b6b;
+        .notification.success { background: linear-gradient(45deg, #00b894, #00a085); }
+        .notification.error { background: linear-gradient(45deg, #e17055, #d63031); }
+
+        @keyframes slideInRight {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        /* Responsive */
+        /* Snipcart Customizations */
+        .snipcart-add-item {
+            width: 100%; background: var(--accent-gradient) !important; color: white !important; border: none !important;
+            padding: 14px 20px !important; border-radius: 12px !important; font-weight: 600 !important; font-size: 1rem !important;
+            cursor: pointer !important; transition: var(--transition) !important; text-decoration: none !important;
+            display: flex !important; align-items: center !important; justify-content: center !important; gap: 0.5rem !important;
+        }
+        .snipcart-add-item:hover { transform: translateY(-2px) !important; box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3) !important; }
+
+        .snipcart { --color-primary: #ff6b6b !important; --border-radius: 12px !important; }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                padding: 6rem 2rem 2rem;
+                align-items: center;
+                gap: 2rem;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in-out;
             }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
+            .nav-links.active {
+                display: flex;
+                transform: translateX(0);
             }
-
-            .hero-content p {
-                font-size: 1.2rem;
-            }
-
-            .cart-sidebar {
-                width: 100vw;
-                right: -100vw;
-            }
+            .nav-links a { font-size: 1.5rem; }
+            .mobile-menu-btn { display: block; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .products-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .content-card { padding: 2rem 1.5rem; }
+            .container { padding: 0 15px; }
         }
 
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #ff6b6b;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        @media (max-width: 480px) {
+            .product-card { padding: 1.5rem; }
+            .hero { height: calc(70vh - 80px); }
         }
-
-        /* Snipcart customization */
-        .snipcart-add-item {
-            width: 100%;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24) !important;
-            color: white !important;
-            border: none !important;
-            padding: 12px !important;
-            border-radius: 8px !important;
-            font-weight: bold !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-            text-decoration: none !important;
-            display: inline-block !important;
-            text-align: center !important;
-        }
-
-        .snipcart-add-item:hover {
-            opacity: 0.9 !important;
-            transform: translateY(-1px) !important;
-        }
-
-        /* Override Snipcart cart styles */
-        .snipcart {
-            --color-default: #ff6b6b !important;
-            --color-primary: #ff6b6b !important;
-            --color-secondary: #764ba2 !important;
-        }
-
-        #snipcart {
-            z-index: 9999 !important;
-            position: relative;
-        }
-
     </style>
 </head>
 <body>
-  <script>
-    window.SnipcartSettings = {
-        publicApiKey: "ZDc2NjAzNGYtMWNhYi00YWRmLTliNzUtNTc4ZDY2NTM1MWIyNjM4ODM3NDY4NjkwMjU4MjEz",
-        loadStrategy: "on-user-interaction",
-    currency: "cad"
-    version: "3.7.1"
-    addProductBehavior: "none",
-    };
+    <!-- Snipcart Configuration -->
+    <script>
+        window.SnipcartSettings = {
+            publicApiKey: "ZDc2NjAzNGYtMWNhYi00YWRmLTliNzUtNTc4ZDY2NTM1MWIyNjM4ODM3NDY4NjkwMjU4MjEz",
+            loadStrategy: "on-user-interaction",
+            currency: "cad",
+            modalStyle: "side"
+        };
+    </script>
+    <div id="snipcart" data-api-key="ZDc2NjAzNGYtMWNhYi00YWRmLTliNzUtNTc4ZDY2NTM1MWIyNjM4ODM3NDY4NjkwMjU4MjEz" hidden></div>
 
-    (()=>{var c,d;(d=(c=window.SnipcartSettings).version)!=null||(c.version="3.0");var s,S;(S=(s=window.SnipcartSettings).timeoutDuration)!=null||(s.timeoutDuration=2750);var l,p;(p=(l=window.SnipcartSettings).domain)!=null||(l.domain="cdn.snipcart.com");var w,u;(u=(w=window.SnipcartSettings).protocol)!=null||(w.protocol="https");var f=window.SnipcartSettings.version.includes("v3.0.0-ci")||window.SnipcartSettings.version!="3.0"&&window.SnipcartSettings.version.localeCompare("3.4.0",void 0,{numeric:!0,sensitivity:"base"})===-1,m=["focus","mouseover","touchmove","scroll","keydown"];window.LoadSnipcart=o;document.readyState==="loading"?document.addEventListener("DOMContentLoaded",r):r();function r(){window.SnipcartSettings.loadStrategy?window.SnipcartSettings.loadStrategy==="on-user-interaction"&&(m.forEach(t=>document.addEventListener(t,o)),setTimeout(o,window.SnipcartSettings.timeoutDuration)):o()}var a=!1;function o(){if(a)return;a=!0;let t=document.getElementsByTagName("head")[0],e=document.querySelector("#snipcart"),i=document.querySelector(`src[src^="${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}"][src$="snipcart.js"]`),n=document.querySelector(`link[href^="${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}"][href$="snipcart.css"]`);e||(e=document.createElement("div"),e.id="snipcart",e.setAttribute("hidden","true"),document.body.appendChild(e)),v(e),i||(i=document.createElement("script"),i.src=`${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}/themes/v${window.SnipcartSettings.version}/default/snipcart.js`,i.async=!0,t.appendChild(i)),n||(n=document.createElement("link"),n.rel="stylesheet",n.type="text/css",n.href=`${window.SnipcartSettings.protocol}://${window.SnipcartSettings.domain}/themes/v${window.SnipcartSettings.version}/default/snipcart.css`,t.prepend(n)),m.forEach(g=>document.removeEventListener(g,o))}function v(t){!f||(t.dataset.apiKey=window.SnipcartSettings.publicApiKey,window.SnipcartSettings.addProductBehavior&&(t.dataset.configAddProductBehavior=window.SnipcartSettings.addProductBehavior),window.SnipcartSettings.modalStyle&&(t.dataset.configModalStyle=window.SnipcartSettings.modalStyle),window.SnipcartSettings.currency&&(t.dataset.currency=window.SnipcartSettings.currency),window.SnipcartSettings.templatesUrl&&(t.dataset.templatesUrl=window.SnipcartSettings.templatesUrl))}})();
-</script>
     <header>
         <nav class="container">
-            <div class="logo">FenMart</div>
-            <ul class="nav-links">
+            <a href="#" class="logo" onclick="showPage('home')">FenMart</a>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
                 <li><a href="#" onclick="showPage('products')">Products</a></li>
                 <li><a href="#" onclick="showPage('about')">About</a></li>
                 <li><a href="#" onclick="showPage('contact')">Contact</a></li>
             </ul>
-            <div class="cart-icon snipcart-checkout">
-                🛒
-                <span class="snipcart-items-count"></span>
+             <div class="nav-right">
+                <div class="cart-container">
+                    <div class="cart-icon snipcart-checkout">
+                        <span class="emoji">🛒</span>
+                        <span>Cart (<span class="snipcart-items-count">0</span>)</span>
+                    </div>
+                </div>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
             </div>
         </nav>
     </header>
@@ -445,54 +579,62 @@
             <section class="hero">
                 <div class="hero-content">
                     <h1>Welcome to FenMart</h1>
-                    <p>Your Premium Online Marketplace</p>
-                    <button class="cta-button" onclick="showPage('products')">Shop Now</button>
+                    <p>Discover premium technology that transforms your world</p>
+                    <button class="cta-button" onclick="showPage('products')">
+                        Shop Now <span>→</span>
+                    </button>
                 </div>
             </section>
             
             <div class="container">
-                <section class="products-grid">
-                    <div class="product-card">
-                        <div class="product-image">🎧</div>
-                        <h3 class="product-title">Premium Headphones</h3>
-                        <p class="product-price">$299.99</p>
-                        <button class="snipcart-add-item"
-                                data-item-id="headphones-001"
-                                data-item-price="299.99"
-                                data-item-url="/products/headphones"
-                                data-item-description="High-quality wireless headphones with noise cancellation"
-                                data-item-image="https://via.placeholder.com/300x200?text=🎧"
-                                data-item-name="Premium Headphones">
-                            Add to Cart
-                        </button>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">📱</div>
-                        <h3 class="product-title">Smart Phone</h3>
-                        <p class="product-price">$799.99</p>
-                        <button class="snipcart-add-item"
-                                data-item-id="phone-001"
-                                data-item-price="799.99"
-                                data-item-url="/products/smartphone"
-                                data-item-description="Latest smartphone with advanced camera and 5G connectivity"
-                                data-item-image="https://via.placeholder.com/300x200?text=📱"
-                                data-item-name="Smart Phone">
-                            Add to Cart
-                        </button>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">💻</div>
-                        <h3 class="product-title">Gaming Laptop</h3>
-                        <p class="product-price">$1299.99</p>
-                        <button class="snipcart-add-item"
-                                data-item-id="laptop-001"
-                                data-item-price="1299.99"
-                                data-item-url="/products/gaming-laptop"
-                                data-item-description="High-performance laptop perfect for gaming and work"
-                                data-item-image="https://via.placeholder.com/300x200?text=💻"
-                                data-item-name="Gaming Laptop">
-                            Add to Cart
-                        </button>
+                <section class="products-section">
+                    <h2 class="section-title">Featured Products</h2>
+                    <div class="products-grid">
+                        <!-- Featured Product 1 -->
+                        <div class="product-card">
+                           <div class="product-image">🎧</div>
+                           <div class="product-details">
+                                <h3 class="product-title">Premium Headphones</h3>
+                                <p class="product-description">High-quality wireless headphones with active noise cancellation and premium sound quality.</p>
+                                <p class="product-price">$299.99</p>
+                           </div>
+                            <button class="snipcart-add-item add-to-cart"
+                                    data-item-id="headphones-001" data-item-price="299.99" data-item-url="/"
+                                    data-item-description="High-quality wireless headphones with noise cancellation"
+                                    data-item-image="https://placehold.co/100x100/EEE/333?text=🎧" data-item-name="Premium Headphones">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <!-- Featured Product 2 -->
+                        <div class="product-card">
+                            <div class="product-image">📱</div>
+                            <div class="product-details">
+                                <h3 class="product-title">Smart Phone</h3>
+                                <p class="product-description">Latest flagship smartphone with advanced camera system and lightning-fast 5G connectivity.</p>
+                                <p class="product-price">$799.99</p>
+                            </div>
+                            <button class="snipcart-add-item add-to-cart"
+                                    data-item-id="phone-001" data-item-price="799.99" data-item-url="/"
+                                    data-item-description="Latest smartphone with advanced camera and 5G connectivity"
+                                    data-item-image="https://placehold.co/100x100/EEE/333?text=📱" data-item-name="Smart Phone">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <!-- Featured Product 3 -->
+                        <div class="product-card">
+                            <div class="product-image">💻</div>
+                            <div class="product-details">
+                                <h3 class="product-title">Gaming Laptop</h3>
+                                <p class="product-description">High-performance laptop engineered for gaming and professional work with cutting-edge specs.</p>
+                                <p class="product-price">$1299.99</p>
+                            </div>
+                            <button class="snipcart-add-item add-to-cart"
+                                    data-item-id="laptop-001" data-item-price="1299.99" data-item-url="/"
+                                    data-item-description="High-performance laptop perfect for gaming and work"
+                                    data-item-image="https://placehold.co/100x100/EEE/333?text=💻" data-item-name="Gaming Laptop">
+                                Add to Cart
+                            </button>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -501,114 +643,108 @@
         <!-- Products Page -->
         <div id="products" class="page">
             <div class="container">
-                <h2 style="text-align: center; color: white; font-size: 3rem; margin: 2rem 0;">Our Products</h2>
-                <section class="products-grid">
-                    <div class="product-card">
-                        <div class="product-image">🎧</div>
-                        <h3 class="product-title">Premium Headphones</h3>
-                        <p>High-quality wireless headphones with noise cancellation</p>
-                        <p class="product-price">$299.99</p>
-                        <button class="snipcart-add-item"
-                                data-item-id="headphones-001"
-                                data-item-price="299.99"
-                                data-item-url="/products/headphones"
-                                data-item-description="High-quality wireless headphones with noise cancellation"
-                                data-item-image="https://via.placeholder.com/300x200?text=🎧"
-                                data-item-name="Premium Headphones">
-                            Add to Cart
-                        </button>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">📱</div>
-                        <h3 class="product-title">Smart Phone</h3>
-                        <p>Latest smartphone with advanced camera and 5G connectivity</p>
-                        <p class="product-price">$799.99</p>
-                        <button class="snipcart-add-item"
-                                data-item-id="phone-001"
-                                data-item-price="799.99"
-                                data-item-url="/products/smartphone"
-                                data-item-description="Latest smartphone with advanced camera and 5G connectivity"
-                                data-item-image="https://via.placeholder.com/300x200?text=📱"
-                                data-item-name="Smart Phone">
-                            Add to Cart
-                        </button>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">💻</div>
-                        <h3 class="product-title">Gaming Laptop</h3>
-                        <p>High-performance laptop perfect for gaming and work</p>
-                        <p class="product-price">$1299.99</p>
-                        <button class="snipcart-add-item"
-                                data-item-id="laptop-001"
-                                data-item-price="1299.99"
-                                data-item-url="/products/gaming-laptop"
-                                data-item-description="High-performance laptop perfect for gaming and work"
-                                data-item-image="https://via.placeholder.com/300x200?text=💻"
-                                data-item-name="Gaming Laptop">
-                            Add to Cart
-                        </button>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">⌚</div>
-                        <h3 class="product-title">Smart Watch</h3>
-                        <p>Feature-rich smartwatch with health monitoring</p>
-                        <p class="product-price">$399.99</p>
-                        <button class="snipcart-add-item"
-                                data-item-id="watch-001"
-                                data-item-price="399.99"
-                                data-item-url="/products/smartwatch"
-                                data-item-description="Feature-rich smartwatch with health monitoring"
-                                data-item-image="https://via.placeholder.com/300x200?text=⌚"
-                                data-item-name="Smart Watch">
-                            Add to Cart
-                        </button>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">🎮</div>
-                        <h3 class="product-title">Gaming Console</h3>
-                        <p>Next-gen gaming console with 4K capabilities</p>
-                        <p class="product-price">$499.99</p>
-                        <button class="snipcart-add-item"
-                                data-item-id="console-001"
-                                data-item-price="499.99"
-                                data-item-url="/products/gaming-console"
-                                data-item-description="Next-gen gaming console with 4K capabilities"
-                                data-item-image="https://via.placeholder.com/300x200?text=🎮"
-                                data-item-name="Gaming Console">
-                            Add to Cart
-                        </button>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">📷</div>
-                        <h3 class="product-title">Digital Camera</h3>
-                        <p>Professional camera for stunning photography</p>
-                        <p class="product-price">$899.99</p>
-                        <button class="snipcart-add-item"
-                                data-item-id="camera-001"
-                                data-item-price="899.99"
-                                data-item-url="/products/digital-camera"
-                                data-item-description="Professional camera for stunning photography"
-                                data-item-image="https://via.placeholder.com/300x200?text=📷"
-                                data-item-name="Digital Camera">
-                            Add to Cart
-                        </button>
+                <section class="products-section">
+                    <h2 class="section-title">Our Complete Collection</h2>
+                    <div class="products-grid">
+                        <!-- Product cards are dynamically generated or listed here -->
+                        <div class="product-card">
+                             <div class="product-image">🎧</div>
+                             <div class="product-details">
+                                <h3 class="product-title">Premium Headphones</h3>
+                                <p class="product-description">High-quality wireless headphones with active noise cancellation and premium sound quality for audiophiles.</p>
+                                <p class="product-price">$299.99</p>
+                            </div>
+                            <button class="snipcart-add-item add-to-cart"
+                                    data-item-id="headphones-001" data-item-price="299.99" data-item-url="/" data-item-name="Premium Headphones"
+                                    data-item-description="High-quality wireless headphones with noise cancellation"
+                                    data-item-image="https://placehold.co/100x100/EEE/333?text=🎧">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div class="product-card">
+                             <div class="product-image">📱</div>
+                             <div class="product-details">
+                                <h3 class="product-title">Smart Phone</h3>
+                                <p class="product-description">Latest flagship smartphone with advanced camera system, AI features, and lightning-fast 5G connectivity.</p>
+                                <p class="product-price">$799.99</p>
+                            </div>
+                            <button class="snipcart-add-item add-to-cart"
+                                    data-item-id="phone-001" data-item-price="799.99" data-item-url="/" data-item-name="Smart Phone"
+                                    data-item-description="Latest smartphone with advanced camera and 5G connectivity"
+                                    data-item-image="https://placehold.co/100x100/EEE/333?text=📱">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div class="product-card">
+                             <div class="product-image">💻</div>
+                             <div class="product-details">
+                                <h3 class="product-title">Gaming Laptop</h3>
+                                <p class="product-description">High-performance laptop engineered for gaming and professional work with RTX graphics and premium build quality.</p>
+                                <p class="product-price">$1299.99</p>
+                            </div>
+                            <button class="snipcart-add-item add-to-cart"
+                                    data-item-id="laptop-001" data-item-price="1299.99" data-item-url="/" data-item-name="Gaming Laptop"
+                                    data-item-description="High-performance laptop perfect for gaming and work"
+                                    data-item-image="https://placehold.co/100x100/EEE/333?text=💻">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div class="product-card">
+                             <div class="product-image">⌚</div>
+                             <div class="product-details">
+                                <h3 class="product-title">Smart Watch</h3>
+                                <p class="product-description">Feature-rich smartwatch with comprehensive health monitoring, fitness tracking, and seamless connectivity.</p>
+                                <p class="product-price">$399.99</p>
+                            </div>
+                            <button class="snipcart-add-item add-to-cart"
+                                    data-item-id="watch-001" data-item-price="399.99" data-item-url="/" data-item-name="Smart Watch"
+                                    data-item-description="Feature-rich smartwatch with health monitoring"
+                                    data-item-image="https://placehold.co/100x100/EEE/333?text=⌚">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div class="product-card">
+                             <div class="product-image">🎮</div>
+                             <div class="product-details">
+                                <h3 class="product-title">Gaming Console</h3>
+                                <p class="product-description">Next-generation gaming console with 4K capabilities, ray tracing, and an extensive game library.</p>
+                                <p class="product-price">$499.99</p>
+                            </div>
+                            <button class="snipcart-add-item add-to-cart"
+                                    data-item-id="console-001" data-item-price="499.99" data-item-url="/" data-item-name="Gaming Console"
+                                    data-item-description="Next-gen gaming console with 4K capabilities"
+                                    data-item-image="https://placehold.co/100x100/EEE/333?text=🎮">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div class="product-card">
+                             <div class="product-image">📷</div>
+                             <div class="product-details">
+                                <h3 class="product-title">Digital Camera</h3>
+                                <p class="product-description">Professional-grade digital camera with advanced optics, 4K video recording, and exceptional low-light performance.</p>
+                                <p class="product-price">$899.99</p>
+                            </div>
+                            <button class="snipcart-add-item add-to-cart"
+                                    data-item-id="camera-001" data-item-price="899.99" data-item-url="/" data-item-name="Digital Camera"
+                                    data-item-description="Professional camera for stunning photography"
+                                    data-item-image="https://placehold.co/100x100/EEE/333?text=📷">
+                                Add to Cart
+                            </button>
+                        </div>
                     </div>
                 </section>
             </div>
         </div>
-
+        
         <!-- About Page -->
         <div id="about" class="page">
-            <div class="container">
-                <div class="about-content">
+            <div class="container content-page-wrapper">
+                <div class="content-card">
                     <h2>About FenMart</h2>
                     <div class="about-text">
                         <p>Welcome to FenMart, your premier destination for high-quality electronics and tech products. Since our founding, we've been committed to bringing you the latest innovations in technology at competitive prices.</p>
-                        
                         <p>Our mission is simple: to provide exceptional customer service while offering cutting-edge products from the world's leading brands. Whether you're looking for the latest smartphone, premium headphones, or professional-grade equipment, we've got you covered.</p>
-                        
                         <p>At FenMart, we believe that technology should enhance your life, not complicate it. That's why we carefully curate our selection to include only the best products that meet our high standards for quality, performance, and value.</p>
-                        
                         <p>Thank you for choosing FenMart. We're excited to be part of your tech journey!</p>
                     </div>
                 </div>
@@ -617,166 +753,139 @@
 
         <!-- Contact Page -->
         <div id="contact" class="page">
-            <div class="container">
-                <form class="contact-form" action="https://formspree.io/f/meogbazl" method="POST" onsubmit="submitContact(event)">
-                    <h2 style="text-align: center; color: #333; margin-bottom: 2rem;">Contact Us</h2>
-                    
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="cta-button" style="width: 100%;">Send Message</button>
-                </form>
+             <div class="container content-page-wrapper">
+                <div class="content-card">
+                    <h2>Contact Us</h2>
+                    <form class="contact-form" action="https://formspree.io/f/meogbazl" method="POST" onsubmit="handleContactForm(event)">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-button" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- Cart Sidebar - Replaced with Snipcart -->
-    <div id="snipcart" data-api-key="ZDc2NjAzNGYtMWNhYi00YWRmLTliNzUtNTc4ZDY2NTM1MWIyNjM4ODM3NDY4NjkwMjU4MjEz" data-config-modal-style="side"></div>
-
     <!-- Snipcart JavaScript -->
     <script async src="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.js"></script>
-
+    
     <script>
-        // Global variables
-        let currentPage = 'home';
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Element Selectors ---
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const navLinksContainer = document.getElementById('nav-links');
+            const header = document.querySelector('header');
 
-        // Page navigation
-        function showPage(pageName) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show selected page
-            document.getElementById(pageName).classList.add('active');
-            
-            // Update nav links
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            event.target.classList.add('active');
-            currentPage = pageName;
-        }
+            // --- Page Navigation ---
+            window.showPage = (pageName) => {
+                // Hide all pages
+                pages.forEach(page => page.classList.remove('active'));
+                
+                // Show the selected page
+                const activePage = document.getElementById(pageName);
+                if (activePage) activePage.classList.add('active');
 
-        // Contact form
-async function submitContact(event) {
-            event.preventDefault(); // Prevent default form submission
-
-            const form = event.target;
-            const formData = new FormData(form);
-            // const data = Object.fromEntries(formData); // Good for debugging, but fetch can take FormData directly
-
-            // Show a temporary loading state on the button if you like
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.textContent;
-            submitButton.textContent = 'Sending...';
-            submitButton.disabled = true;
-
-            try {
-                const response = await fetch(form.action, { // form.action will be your Formspree URL
-                    method: form.method, // form.method will be 'POST'
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json' // Formspree can reply with JSON
+                // Update active state on nav links
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('onclick').includes(`'${pageName}'`)) {
+                        link.classList.add('active');
                     }
                 });
-
-                if (response.ok) {
-                    // const responseData = await response.json(); // If Formspree sends back JSON
-                    showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
-                    form.reset(); // Clear the form
-                } else {
-                    // Handle errors from Formspree (e.g., validation errors)
-                    // const errorData = await response.json();
-                    // let errorMessage = 'Oops! There was a problem submitting your form.';
-                    // if (errorData && errorData.errors) {
-                    //     errorMessage = errorData.errors.map(error => error.message).join(', ');
-                    // }
-                    showNotification('Oops! There was a problem. Please try again.', 'error');
+                
+                // Close mobile menu on navigation
+                if (navLinksContainer.classList.contains('active')) {
+                    navLinksContainer.classList.remove('active');
+                    mobileMenuBtn.textContent = '☰';
                 }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                showNotification('An error occurred. Please try again later.', 'error');
-            } finally {
-                submitButton.textContent = originalButtonText;
-                submitButton.disabled = false;
-            }
-        }
+                
+                // Scroll to top of the page
+                window.scrollTo(0, 0);
+            };
 
+            // --- Mobile Menu Toggle ---
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinksContainer.classList.toggle('active');
+                mobileMenuBtn.textContent = navLinksContainer.classList.contains('active') ? '✕' : '☰';
+            });
+            
+            // --- Header Scroll Effect ---
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            }, { passive: true });
 
-        // Notification system
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: ${type === 'error' ? '#ff4757' : type === 'success' ? '#2ed573' : '#667eea'};
-                color: white;
-                padding: 15px 20px;
-                border-radius: 8px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-                z-index: 3000;
-                animation: slideIn 0.3s ease;
-            `;
-            notification.textContent = message;
+            // --- Contact Form Submission ---
+            window.handleContactForm = async (event) => {
+                event.preventDefault();
+                const form = event.target;
+                const submitButton = form.querySelector('button[type="submit"]');
+                const originalButtonText = submitButton.textContent;
+                submitButton.textContent = 'Sending...';
+                submitButton.disabled = true;
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: new FormData(form),
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+                        form.reset();
+                    } else {
+                        showNotification('Oops! There was a problem. Please try again.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Form submission error:', error);
+                    showNotification('An network error occurred. Please try again later.', 'error');
+                } finally {
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                }
+            };
             
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
+            // --- Notification System ---
+            function showNotification(message, type = 'success') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                // Automatically remove the notification after a few seconds
                 setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-        }
-
-        // Add slideIn and slideOut animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
+                    notification.style.animation = 'slideOutRight 0.4s ease-out forwards';
+                    setTimeout(() => notification.remove(), 400);
+                }, 3500);
             }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
 
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
-        });
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            // Snipcart is now handling cart functionality
-            console.log('FenMart loaded with Snipcart integration');
+            // --- Add animation styles for notification exit ---
+            const styleSheet = document.createElement("style");
+            styleSheet.type = "text/css";
+            styleSheet.innerText = `
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(120%); opacity: 0; }
+                }
+                .notification { animation: slideInRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+            `;
+            document.head.appendChild(styleSheet);
         });
     </script>
 </body>
